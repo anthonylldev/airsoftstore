@@ -1,0 +1,40 @@
+{
+  "applications": "*",
+  "changelogDate": "20220929145235",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "sub_category",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "cover",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "SubCategory",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "category",
+      "otherEntityRelationshipName": "subcategory",
+      "relationshipName": "category",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "item",
+      "otherEntityRelationshipName": "subCategory",
+      "relationshipName": "item",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

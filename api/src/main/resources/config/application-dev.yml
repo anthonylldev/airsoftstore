@@ -34,15 +34,19 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgresql://localhost:5432/airsoftstore
     username: airsoftstore
-    password:
+    password: airsoftstore
     hikari:
       poolName: Hikari
       auto-commit: false
   jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
     database-platform: tech.jhipster.domain.util.FixedPostgreSQL10Dialect
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
-    contexts: dev, faker
+    contexts: dev
   mail:
     host: localhost
     port: 25

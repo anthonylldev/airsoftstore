@@ -1,0 +1,33 @@
+entity Category {
+	title String required
+    cover ImageBlob
+}
+
+entity SubCategory {
+	title String required
+    cover ImageBlob
+}
+
+entity Brand {
+	title String required
+}
+
+entity Item {
+	title String required
+    price Long required min(0)
+    stock Integer required min(0)
+    description String
+    productDetails String
+    cover ImageBlob
+}
+
+relationship ManyToOne {
+	SubCategory{category(title)} to Category{subcategory}
+	Item{brand(title) required} to Brand{item}         
+    Item{subCategory(title) required} to SubCategory{item}
+}
+
+paginate all with pagination
+service all with serviceImpl
+dto all with mapstruct
+filter all 

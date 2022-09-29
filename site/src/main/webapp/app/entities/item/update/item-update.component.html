@@ -1,0 +1,189 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-item-heading" data-cy="ItemCreateUpdateHeading" jhiTranslate="airsoftstoreApp.item.home.createOrEditLabel">
+        Crear o editar Item
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="airsoftstoreApp.item.title" for="field_title">Title</label>
+          <input type="text" class="form-control" name="title" id="field_title" data-cy="title" formControlName="title" />
+          <div *ngIf="editForm.get('title')!.invalid && (editForm.get('title')!.dirty || editForm.get('title')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('title')?.errors?.required" jhiTranslate="entity.validation.required">
+              Este campo es obligatorio.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="airsoftstoreApp.item.price" for="field_price">Price</label>
+          <input type="number" class="form-control" name="price" id="field_price" data-cy="price" formControlName="price" />
+          <div *ngIf="editForm.get('price')!.invalid && (editForm.get('price')!.dirty || editForm.get('price')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('price')?.errors?.required" jhiTranslate="entity.validation.required">
+              Este campo es obligatorio.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('price')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo debe ser mayor que 0.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('price')?.errors?.number" jhiTranslate="entity.validation.number">
+              Este campo debe ser un número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="airsoftstoreApp.item.stock" for="field_stock">Stock</label>
+          <input type="number" class="form-control" name="stock" id="field_stock" data-cy="stock" formControlName="stock" />
+          <div *ngIf="editForm.get('stock')!.invalid && (editForm.get('stock')!.dirty || editForm.get('stock')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('stock')?.errors?.required" jhiTranslate="entity.validation.required">
+              Este campo es obligatorio.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('stock')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo debe ser mayor que 0.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('stock')?.errors?.number" jhiTranslate="entity.validation.number">
+              Este campo debe ser un número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="airsoftstoreApp.item.description" for="field_description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="airsoftstoreApp.item.productDetails" for="field_productDetails">Product Details</label>
+          <input
+            type="text"
+            class="form-control"
+            name="productDetails"
+            id="field_productDetails"
+            data-cy="productDetails"
+            formControlName="productDetails"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="airsoftstoreApp.item.cover" for="field_cover">Cover</label>
+          <div>
+            <img
+              [src]="'data:' + editForm.get('coverContentType')!.value + ';base64,' + editForm.get('cover')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('cover')!.value"
+              alt="item image"
+            />
+            <div *ngIf="editForm.get('cover')!.value" class="form-text text-danger clearfix">
+              <span class="pull-start">{{ editForm.get('coverContentType')!.value }}, {{ byteSize(editForm.get('cover')!.value!) }}</span>
+              <button
+                type="button"
+                (click)="clearInputImage('cover', 'coverContentType', 'file_cover')"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_cover"
+              data-cy="cover"
+              (change)="setFileData($event, 'cover', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="cover" id="field_cover" data-cy="cover" formControlName="cover" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="coverContentType"
+            id="field_coverContentType"
+            formControlName="coverContentType"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="airsoftstoreApp.item.brand" for="field_brand">Brand</label>
+          <select class="form-control" id="field_brand" data-cy="brand" name="brand" formControlName="brand" [compareWith]="compareBrand">
+            <option *ngIf="editForm.get(['brand'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="brandOption" *ngFor="let brandOption of brandsSharedCollection">{{ brandOption.title }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['brand'])!.invalid && (editForm.get(['brand'])!.dirty || editForm.get(['brand'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['brand'])?.errors?.required" jhiTranslate="entity.validation.required">
+            Este campo es obligatorio.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="airsoftstoreApp.item.subCategory" for="field_subCategory">Sub Category</label>
+          <select
+            class="form-control"
+            id="field_subCategory"
+            data-cy="subCategory"
+            name="subCategory"
+            formControlName="subCategory"
+            [compareWith]="compareSubCategory"
+          >
+            <option *ngIf="editForm.get(['subCategory'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="subCategoryOption" *ngFor="let subCategoryOption of subCategoriesSharedCollection">
+              {{ subCategoryOption.title }}
+            </option>
+          </select>
+        </div>
+        <div
+          *ngIf="editForm.get(['subCategory'])!.invalid && (editForm.get(['subCategory'])!.dirty || editForm.get(['subCategory'])!.touched)"
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['subCategory'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            Este campo es obligatorio.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

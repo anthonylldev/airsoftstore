@@ -1,0 +1,41 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="category">
+      <h2 data-cy="categoryDetailsHeading"><span jhiTranslate="airsoftstoreApp.category.detail.title">Category</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ category.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="airsoftstoreApp.category.title">Title</span></dt>
+        <dd>
+          <span>{{ category.title }}</span>
+        </dd>
+        <dt><span jhiTranslate="airsoftstoreApp.category.cover">Cover</span></dt>
+        <dd>
+          <div *ngIf="category.cover">
+            <a (click)="openFile(category.cover, category.coverContentType)">
+              <img [src]="'data:' + category.coverContentType + ';base64,' + category.cover" style="max-width: 100%" alt="category image" />
+            </a>
+            {{ category.coverContentType }}, {{ byteSize(category.cover) }}
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+      </button>
+
+      <button type="button" [routerLink]="['/category', category.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

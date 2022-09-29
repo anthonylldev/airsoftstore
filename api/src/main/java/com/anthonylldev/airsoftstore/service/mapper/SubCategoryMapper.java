@@ -14,9 +14,29 @@ public interface SubCategoryMapper extends EntityMapper<SubCategoryDTO, SubCateg
     @Mapping(target = "category", source = "category", qualifiedByName = "categoryTitle")
     SubCategoryDTO toDto(SubCategory s);
 
+    @Override
+    @Mapping(target = "items", ignore = true)
+    @Mapping(target = "removeItem", ignore = true)
+    @Mapping(target = "category", source = "category", qualifiedByName = "categoryEntityTitle")
+    SubCategory toEntity(SubCategoryDTO dto);
+
+    @Override
+    @Named("partialUpdate")
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "items", ignore = true)
+    @Mapping(target = "removeItem", ignore = true)
+    @Mapping(target = "category", source = "category", qualifiedByName = "categoryEntityTitle")
+    void partialUpdate(@MappingTarget SubCategory entity, SubCategoryDTO dto);
+
     @Named("categoryTitle")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     @Mapping(target = "title", source = "title")
     CategoryDTO toDtoCategoryTitle(Category category);
+
+    @Named("categoryEntityTitle")
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "title", source = "title")
+    Category toDtoCategoryTitle(CategoryDTO categoryDTO);
 }

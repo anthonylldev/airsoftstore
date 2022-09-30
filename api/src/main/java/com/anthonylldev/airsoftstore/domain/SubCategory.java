@@ -42,6 +42,9 @@ public class SubCategory implements Serializable {
     @JsonIgnoreProperties(value = { "brand", "subCategory" }, allowSetters = true)
     private Set<Item> items = new HashSet<>();
 
+    @Column(name = "access_count")
+    private Integer accessCount;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -140,6 +143,14 @@ public class SubCategory implements Serializable {
         return this;
     }
 
+    public Integer getAccessCount() {
+        return accessCount;
+    }
+
+    public void setAccessCount(Integer accessCount) {
+        this.accessCount = accessCount;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -167,6 +178,7 @@ public class SubCategory implements Serializable {
             ", title='" + getTitle() + "'" +
             ", cover='" + getCover() + "'" +
             ", coverContentType='" + getCoverContentType() + "'" +
+            ", accessCount='" + getAccessCount() + "'" +
             "}";
     }
 }

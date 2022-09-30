@@ -6,6 +6,7 @@ export interface ISubCategory {
   cover?: string | null;
   coverContentType?: string | null;
   category?: Pick<ICategory, 'id' | 'title'> | null;
+  accessCount?: number | null;
 }
 
 export type NewSubCategory = Omit<ISubCategory, 'id'> & { id: null };

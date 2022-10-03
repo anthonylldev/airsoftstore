@@ -1,0 +1,10 @@
+<div class="card text-center" *ngIf="item">
+  <div class="card-img">
+    <img [src]="'data:' + item.coverContentType + ';base64,' + item.cover" class="card-img-top" alt="item image" />
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">
+      {{ item.title }}
+    </h5>
+  </div>
+</div>

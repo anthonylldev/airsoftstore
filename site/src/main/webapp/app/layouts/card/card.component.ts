@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-card',
@@ -8,4 +9,16 @@ import { Component, Input } from '@angular/core';
 export class CardComponent {
   @Input() item?: any
 
+  constructor(
+    private router: Router
+  ) {}
+
+  protected navToSubItems(): void {
+    const querySubItemObject: any = {
+      'filter[subCategoryId.in]': this.item.id
+    }
+    this.router.navigate(['/item'], {queryParams: querySubItemObject})
+  }
+
 }
+

@@ -15,7 +15,7 @@ const itemRoute: Routes = [
     data: {
       defaultSort: 'id,' + ASC,
     },
-    canActivate: [UserRouteAccessService],
+    // canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/view',
@@ -23,7 +23,7 @@ const itemRoute: Routes = [
     resolve: {
       item: ItemRoutingResolveService,
     },
-    canActivate: [UserRouteAccessService],
+   // canActivate: [UserRouteAccessService],
   },
   {
     path: 'new',

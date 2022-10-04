@@ -14,7 +14,7 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type SubCategoryFormGroupInput = ISubCategory | PartialWithRequiredKeyOf<NewSubCategory>;
 
-type SubCategoryFormDefaults = Pick<NewSubCategory, 'id' >;
+type SubCategoryFormDefaults = Pick<NewSubCategory, 'id'>;
 
 type SubCategoryFormGroupContent = {
   id: FormControl<ISubCategory['id'] | NewSubCategory['id']>;
@@ -48,7 +48,10 @@ export class SubCategoryFormService {
       cover: new FormControl(subCategoryRawValue.cover),
       coverContentType: new FormControl(subCategoryRawValue.coverContentType),
       category: new FormControl(subCategoryRawValue.category),
-      accessCount: new FormControl(subCategoryRawValue.accessCount),
+      accessCount: new FormControl({
+        value: subCategoryRawValue.accessCount ? subCategoryRawValue.accessCount : 0,
+        disabled: true,
+      }),
     });
   }
 

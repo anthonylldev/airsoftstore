@@ -1,6 +1,10 @@
 package com.anthonylldev.airsoftstore.service.dto;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Objects;
 import javax.persistence.Lob;
 import javax.validation.constraints.*;
@@ -35,6 +39,8 @@ public class ItemDTO implements Serializable {
     private BrandDTO brand;
 
     private SubCategoryDTO subCategory;
+
+    private LocalDateTime inclusionDate;
 
     public Long getId() {
         return id;
@@ -116,6 +122,14 @@ public class ItemDTO implements Serializable {
         this.subCategory = subCategory;
     }
 
+    public LocalDateTime getInclusionDate() {
+        return inclusionDate;
+    }
+
+    public void setInclusionDate(LocalDateTime inclusionDate) {
+        this.inclusionDate = inclusionDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -150,6 +164,7 @@ public class ItemDTO implements Serializable {
             ", cover='" + getCover() + "'" +
             ", brand=" + getBrand() +
             ", subCategory=" + getSubCategory() +
+            ", inclusionDate=" + getInclusionDate() +
             "}";
     }
 }

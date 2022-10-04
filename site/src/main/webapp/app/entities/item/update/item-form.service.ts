@@ -27,6 +27,7 @@ type ItemFormGroupContent = {
   coverContentType: FormControl<IItem['coverContentType']>;
   brand: FormControl<IItem['brand']>;
   subCategory: FormControl<IItem['subCategory']>;
+  inclusionDate: FormControl<IItem['inclusionDate']>;
 };
 
 export type ItemFormGroup = FormGroup<ItemFormGroupContent>;
@@ -65,6 +66,10 @@ export class ItemFormService {
       subCategory: new FormControl(itemRawValue.subCategory, {
         validators: [Validators.required],
       }),
+      inclusionDate: new FormControl({
+        value: itemRawValue.inclusionDate ? itemRawValue.inclusionDate : this.createDateAsUTC(),
+        disabled: true,
+      }),
     });
   }
 
@@ -86,5 +91,11 @@ export class ItemFormService {
     return {
       id: null,
     };
+  }
+
+  private createDateAsUTC(): Date {
+    const date: Date = new Date();
+
+    return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
   }
 }

@@ -2,6 +2,10 @@ package com.anthonylldev.airsoftstore.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -57,6 +61,9 @@ public class Item implements Serializable {
     @NotNull
     @JsonIgnoreProperties(value = { "category", "items" }, allowSetters = true)
     private SubCategory subCategory;
+
+    @Column(name = "inclusion_date")
+    private LocalDateTime inclusionDate;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -190,6 +197,14 @@ public class Item implements Serializable {
         return this;
     }
 
+    public LocalDateTime getInclusionDate() {
+        return inclusionDate;
+    }
+
+    public void setInclusionDate(LocalDateTime inclusionDate) {
+        this.inclusionDate = inclusionDate;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -221,6 +236,7 @@ public class Item implements Serializable {
             ", productDetails='" + getProductDetails() + "'" +
             ", cover='" + getCover() + "'" +
             ", coverContentType='" + getCoverContentType() + "'" +
+            ", inclusionDate='" + getInclusionDate() + "'" +
             "}";
     }
 }

@@ -34,9 +34,6 @@ public class SubCategoryServiceImpl implements SubCategoryService {
     @Override
     public SubCategoryDTO save(SubCategoryDTO subCategoryDTO) {
         log.debug("Request to save SubCategory : {}", subCategoryDTO);
-
-        subCategoryDTO.setAccessCount(0);
-
         SubCategory subCategory = subCategoryMapper.toEntity(subCategoryDTO);
         subCategory = subCategoryRepository.save(subCategory);
         return subCategoryMapper.toDto(subCategory);

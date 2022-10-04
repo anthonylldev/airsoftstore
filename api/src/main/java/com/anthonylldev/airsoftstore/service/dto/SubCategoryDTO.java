@@ -22,6 +22,8 @@ public class SubCategoryDTO implements Serializable {
     private String coverContentType;
     private CategoryDTO category;
 
+    private Integer accessCount;
+
     public Long getId() {
         return id;
     }
@@ -62,6 +64,14 @@ public class SubCategoryDTO implements Serializable {
         this.category = category;
     }
 
+    public Integer getAccessCount() {
+        return accessCount;
+    }
+
+    public void setAccessCount(Integer accessCount) {
+        this.accessCount = accessCount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -91,6 +101,7 @@ public class SubCategoryDTO implements Serializable {
             ", title='" + getTitle() + "'" +
             ", cover='" + getCover() + "'" +
             ", category=" + getCategory() +
+            ", accessCount=" + getAccessCount() +
             "}";
     }
 }

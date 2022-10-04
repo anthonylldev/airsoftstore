@@ -1,5 +1,6 @@
 package com.anthonylldev.airsoftstore.web.rest;
 
+import com.anthonylldev.airsoftstore.domain.subCategory.SubCategoryAccessCounterIncreaseService;
 import com.anthonylldev.airsoftstore.repository.ItemRepository;
 import com.anthonylldev.airsoftstore.service.ItemQueryService;
 import com.anthonylldev.airsoftstore.service.ItemService;
@@ -46,10 +47,13 @@ public class ItemResource {
 
     private final ItemQueryService itemQueryService;
 
-    public ItemResource(ItemService itemService, ItemRepository itemRepository, ItemQueryService itemQueryService) {
+    private final SubCategoryAccessCounterIncreaseService subCategoryAccessCounterIncreaseService;
+
+    public ItemResource(ItemService itemService, ItemRepository itemRepository, ItemQueryService itemQueryService, SubCategoryAccessCounterIncreaseService subCategoryAccessCounterIncreaseService) {
         this.itemService = itemService;
         this.itemRepository = itemRepository;
         this.itemQueryService = itemQueryService;
+        this.subCategoryAccessCounterIncreaseService = subCategoryAccessCounterIncreaseService;
     }
 
     /**
@@ -155,7 +159,10 @@ public class ItemResource {
         @org.springdoc.api.annotations.ParameterObject Pageable pageable
     ) {
         log.debug("REST request to get Items by criteria: {}", criteria);
+
         Page<ItemDTO> page = itemQueryService.findByCriteria(criteria, pageable);
+        this.subCategoryAccessCounterIncreaseService.increase(criteria);
+
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

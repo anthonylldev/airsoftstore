@@ -1,11 +1,10 @@
-package com.anthonylldev.airsoftstore.domain;
+package com.anthonylldev.airsoftstore.domain.item;
 
+import com.anthonylldev.airsoftstore.domain.Brand;
+import com.anthonylldev.airsoftstore.domain.SubCategory;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 

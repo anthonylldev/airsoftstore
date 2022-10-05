@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-card',
-  templateUrl: './card.component.html',
-  styleUrls: ['./card.component.scss']
+  templateUrl: './standard-card.component.html',
+  styleUrls: ['./standard-card.component.scss']
 })
 export class CardComponent {
   @Input() item?: any

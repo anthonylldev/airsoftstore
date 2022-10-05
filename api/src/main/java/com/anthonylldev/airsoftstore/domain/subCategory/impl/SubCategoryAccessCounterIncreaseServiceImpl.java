@@ -10,6 +10,7 @@ import com.anthonylldev.airsoftstore.service.criteria.ItemCriteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import tech.jhipster.service.filter.LongFilter;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,28 +31,30 @@ public class SubCategoryAccessCounterIncreaseServiceImpl implements SubCategoryA
         boolean currentUserIsUser = SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.USER);
 
         if (currentUserIsUser) {
-            List<Long> subCategoriesIds = criteria.getSubCategoryId().getIn();
+            LongFilter subCategoriesLongFilter = criteria.getSubCategoryId();
 
-            for (Long subCategoryId :
-                subCategoriesIds) {
+            if (subCategoriesLongFilter != null) {
+                for (Long subCategoryId :
+                    subCategoriesLongFilter.getIn()) {
 
-                log.debug("findOne: {}", subCategoryId);
+                    log.debug("findOne: {}", subCategoryId);
 
-                Optional<SubCategory> subCategory =  this.subCategoryRepository.findById(subCategoryId);
+                    Optional<SubCategory> subCategory =  this.subCategoryRepository.findById(subCategoryId);
 
-                boolean increaseSuccessfully =  subCategory.map(_subCategory -> {
-                    try {
-                        _subCategory.setAccessCount(_subCategory.getAccessCount() + 1);
-                    } catch (NullPointerException e) {
-                        log.debug("subCategory: {}, have null in access_count.", subCategoryId);
-                        return false;
-                    }
-                    _subCategory = this.subCategoryRepository.save(_subCategory);
+                    boolean increaseSuccessfully =  subCategory.map(_subCategory -> {
+                        try {
+                            _subCategory.setAccessCount(_subCategory.getAccessCount() + 1);
+                        } catch (NullPointerException e) {
+                            log.debug("subCategory: {}, have null in access_count.", subCategoryId);
+                            return false;
+                        }
+                        _subCategory = this.subCategoryRepository.save(_subCategory);
 
-                    return true;
-                }).orElse(false);
+                        return true;
+                    }).orElse(false);
 
-                log.debug("increaseSuccessfully : {}", increaseSuccessfully);
+                    log.debug("increaseSuccessfully : {}", increaseSuccessfully);
+                }
             }
         }
     }

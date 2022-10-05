@@ -22,6 +22,7 @@ type SubCategoryFormGroupContent = {
   cover: FormControl<ISubCategory['cover']>;
   coverContentType: FormControl<ISubCategory['coverContentType']>;
   category: FormControl<ISubCategory['category']>;
+  accessCount: FormControl<ISubCategory['accessCount']>;
 };
 
 export type SubCategoryFormGroup = FormGroup<SubCategoryFormGroupContent>;
@@ -47,6 +48,10 @@ export class SubCategoryFormService {
       cover: new FormControl(subCategoryRawValue.cover),
       coverContentType: new FormControl(subCategoryRawValue.coverContentType),
       category: new FormControl(subCategoryRawValue.category),
+      accessCount: new FormControl({
+        value: subCategoryRawValue.accessCount ? subCategoryRawValue.accessCount : 0,
+        disabled: true,
+      }),
     });
   }
 

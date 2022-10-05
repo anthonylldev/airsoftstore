@@ -12,6 +12,9 @@ export interface IItem {
   coverContentType?: string | null;
   brand?: Pick<IBrand, 'id' | 'title'> | null;
   subCategory?: Pick<ISubCategory, 'id' | 'title'> | null;
+  inclusionDate?: Date | null;
 }
+
+
 
 export type NewItem = Omit<IItem, 'id'> & { id: null };

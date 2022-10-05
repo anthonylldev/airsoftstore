@@ -8,6 +8,8 @@ import { Account } from 'app/core/auth/account.model';
 import { SubCategoryService } from 'app/entities/sub-category/service/sub-category.service';
 import { EntityArrayResponseType } from 'app/entities/category/service/category.service';
 import { ISubCategory } from 'app/entities/sub-category/sub-category.model';
+import { ItemService } from 'app/entities/item/service/item.service';
+import { IItem } from 'app/entities/item/item.model';
 
 @Component({
   selector: 'jhi-home',
@@ -17,13 +19,16 @@ import { ISubCategory } from 'app/entities/sub-category/sub-category.model';
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
   mostPopularSubCategories?: ISubCategory[];
+  itemsNews?: IItem[];
 
   private readonly destroy$ = new Subject<void>();
 
   constructor(
     private accountService: AccountService,
     private subCategoryService: SubCategoryService,
-    private router: Router) {}
+    private itemService: ItemService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.accountService
@@ -32,6 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe(account => (this.account = account));
 
     this.loadMostPopularSubCategories();
+    this.loadItemsNews();
   }
 
   login(): void {
@@ -47,24 +53,47 @@ export class HomeComponent implements OnInit, OnDestroy {
     const queryMostPopularSubCategoriesObject: any = {
       page: 0,
       size: 9,
-      eargeload: true,
-      sort: ["accessCount,desc"]
-    }
+      eagerload: true,
+      sort: ['accessCount,desc'],
+    };
 
     this.subCategoryService.query(queryMostPopularSubCategoriesObject).subscribe({
       next: (res: EntityArrayResponseType) => {
-        this.onResponseSuccess(res);
+        this.onSubCategoryResponseSuccess(res);
       },
     });
   }
 
-  private onResponseSuccess(response: EntityArrayResponseType): void {
-    const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
+  private onSubCategoryResponseSuccess(response: EntityArrayResponseType): void {
+    const dataFromBody = this.fillMostPopularSubCategoriesFromResponseBody(response.body);
     this.mostPopularSubCategories = dataFromBody;
   }
 
-  private fillComponentAttributesFromResponseBody(data: ISubCategory[] | null): ISubCategory[] {
+  private fillMostPopularSubCategoriesFromResponseBody(data: ISubCategory[] | null): ISubCategory[] {
     return data ?? [];
   }
 
+  private loadItemsNews(): void {
+    const queryItemsNewsObject: any = {
+      page: 0,
+      size: 26,
+      eagerload: true,
+      sort: ['inclusionDate,desc'],
+    };
+
+    this.itemService.query(queryItemsNewsObject).subscribe({
+      next: (res: EntityArrayResponseType) => {
+        this.onItemResponseSuccess(res);
+      },
+    });
+  }
+
+  private onItemResponseSuccess(response: EntityArrayResponseType): void {
+    const dataFromBody = this.fillItemsNewsFromResponseBody(response.body);
+    this.itemsNews = dataFromBody;
+  }
+
+  private fillItemsNewsFromResponseBody(data: IItem[] | null): IItem[] {
+    return data ?? [];
+  }
 }

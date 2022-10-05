@@ -1,0 +1,11 @@
+<div class="card text-center" *ngIf="item">
+  <div class="card-header">
+    {{ item.title }}
+  </div>
+  <div class="card-img">
+    <img [src]="'data:' + item.coverContentType + ';base64,' + item.cover" class="card-img-top" alt="item image" />
+  </div>
+  <div class="card-footer text-muted">
+    {{ item.price | currency:'EUR' }}
+  </div>
+</div>

@@ -89,7 +89,13 @@
     "ribbon": {
       "dev": "Development"
     },
-    "item-count": "Mostrando {{first}} - {{second}} de {{total}} elementos."
+    "item-count": "Mostrando {{first}} - {{second}} de {{total}} elementos.",
+    "card": {
+      "item": {
+        "addToCart": "Añadir al carrito",
+        "outOfStock": "Sin stock"
+      }
+    }
   },
   "entity": {
     "action": {

@@ -1,11 +1,63 @@
+@import "../../../content/scss/bootstrap-variables";
+
 .card {
+  margin-bottom: 24px;
+  box-shadow: 5px 5px 15px black;
   background-color: white;
+
   .card-header {
     color: black;
+    font-weight: bold;
   }
 
   .card-body {
     color: black;
+  }
+
+  .card-footer {
+    color: black;
+    font-weight: bold;
+    height: 94px;
+
+    button {
+      color: white;
+      padding: 5px 10px;
+      border-radius: 10px;
+      border: none;
+      background-color: black;
+      transition: 0.5s;
+
+      span {
+        fa-icon {
+          margin-right: 2px;
+        }
+      }
+    }
+
+    .outOfStock {
+      color: red;
+    }
+  }
+
+  .card-img {
+    width: 100%;
+    height: 200px;
+
+    img {
+      height: 100%;
+      width: 100%;
+      max-height: 100vh;
+      max-width: 110vh;
+      object-fit: cover;
+    }
+  }
+
+  &:hover {
+    .card-footer {
+      button {
+        box-shadow: 0 0 10px black;
+      }
+    }
   }
 }
 

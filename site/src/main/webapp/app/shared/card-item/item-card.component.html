@@ -5,7 +5,19 @@
   <div class="card-img">
     <img [src]="'data:' + item.coverContentType + ';base64,' + item.cover" class="card-img-top" alt="item image" />
   </div>
-  <div class="card-footer text-muted">
-    {{ item.price | currency:'EUR' }}
+  <div class="card-footer">
+    <p>{{ item.price | currency: 'EUR' }}</p>
+    <div *ngIf="item.stock">
+      <button  *ngIf="item.stock > 0">
+        <span>
+          <fa-icon [icon]="faCartShopping"></fa-icon>
+          <span jhiTranslate="global.card.item.addToCart">Out of stock</span>
+        </span>
+      </button>
+    </div>
+    <span *ngIf="item.stock == 0" class="outOfStock">
+      <fa-icon [icon]="faBan"></fa-icon>
+      <span jhiTranslate="global.card.item.outOfStock">Out of stock</span>
+    </span>
   </div>
 </div>

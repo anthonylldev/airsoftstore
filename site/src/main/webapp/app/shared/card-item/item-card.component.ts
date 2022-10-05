@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { faBan, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { IItem } from '../../entities/item/item.model';
 
 @Component({
@@ -7,6 +8,8 @@ import { IItem } from '../../entities/item/item.model';
   styleUrls: ['./item-card.component.scss']
 })
 export class ItemCardComponent {
-  @Input() item?: IItem
+  @Input() item?: IItem;
+  faBan = faBan;
+  faCartShopping = faCartShopping;
 
 }

@@ -1,24 +1,25 @@
 package com.anthonylldev.airsoftstore.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Immutable;
+
+import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import javax.persistence.*;
-import javax.validation.constraints.*;
 
 /**
- * A Item.
+ * A Simple Item.
  */
 @Entity
-@Table(name = "item")
+@Immutable
+@Table(name = "v_simple_item")
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class Item implements Serializable {
+public class SimpleItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
     @Column(name = "id")
     private Long id;
 
@@ -36,28 +37,12 @@ public class Item implements Serializable {
     @Column(name = "stock", nullable = false)
     private Integer stock;
 
-    @Column(name = "description")
-    private String description;
-
-    @Column(name = "product_details")
-    private String productDetails;
-
     @Lob
     @Column(name = "cover")
     private byte[] cover;
 
     @Column(name = "cover_content_type")
     private String coverContentType;
-
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties(value = { "items" }, allowSetters = true)
-    private Brand brand;
-
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties(value = { "category", "items" }, allowSetters = true)
-    private SubCategory subCategory;
 
     @NotNull
     @Column(name = "inclusion_date")
@@ -69,7 +54,7 @@ public class Item implements Serializable {
         return this.id;
     }
 
-    public Item id(Long id) {
+    public SimpleItem id(Long id) {
         this.setId(id);
         return this;
     }
@@ -82,7 +67,7 @@ public class Item implements Serializable {
         return this.title;
     }
 
-    public Item title(String title) {
+    public SimpleItem title(String title) {
         this.setTitle(title);
         return this;
     }
@@ -95,7 +80,7 @@ public class Item implements Serializable {
         return this.price;
     }
 
-    public Item price(Long price) {
+    public SimpleItem price(Long price) {
         this.setPrice(price);
         return this;
     }
@@ -108,7 +93,7 @@ public class Item implements Serializable {
         return this.stock;
     }
 
-    public Item stock(Integer stock) {
+    public SimpleItem stock(Integer stock) {
         this.setStock(stock);
         return this;
     }
@@ -117,37 +102,11 @@ public class Item implements Serializable {
         this.stock = stock;
     }
 
-    public String getDescription() {
-        return this.description;
-    }
-
-    public Item description(String description) {
-        this.setDescription(description);
-        return this;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getProductDetails() {
-        return this.productDetails;
-    }
-
-    public Item productDetails(String productDetails) {
-        this.setProductDetails(productDetails);
-        return this;
-    }
-
-    public void setProductDetails(String productDetails) {
-        this.productDetails = productDetails;
-    }
-
     public byte[] getCover() {
         return this.cover;
     }
 
-    public Item cover(byte[] cover) {
+    public SimpleItem cover(byte[] cover) {
         this.setCover(cover);
         return this;
     }
@@ -160,7 +119,7 @@ public class Item implements Serializable {
         return this.coverContentType;
     }
 
-    public Item coverContentType(String coverContentType) {
+    public SimpleItem coverContentType(String coverContentType) {
         this.coverContentType = coverContentType;
         return this;
     }
@@ -169,37 +128,11 @@ public class Item implements Serializable {
         this.coverContentType = coverContentType;
     }
 
-    public Brand getBrand() {
-        return this.brand;
-    }
-
-    public void setBrand(Brand brand) {
-        this.brand = brand;
-    }
-
-    public Item brand(Brand brand) {
-        this.setBrand(brand);
-        return this;
-    }
-
-    public SubCategory getSubCategory() {
-        return this.subCategory;
-    }
-
-    public void setSubCategory(SubCategory subCategory) {
-        this.subCategory = subCategory;
-    }
-
-    public Item subCategory(SubCategory subCategory) {
-        this.setSubCategory(subCategory);
-        return this;
-    }
-
     public LocalDateTime getInclusionDate() {
         return inclusionDate;
     }
 
-    public Item inclusionDate(LocalDateTime inclusionDate) {
+    public SimpleItem inclusionDate(LocalDateTime inclusionDate) {
         this.inclusionDate = inclusionDate;
         return this;
     }
@@ -215,10 +148,10 @@ public class Item implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Item)) {
+        if (!(o instanceof SimpleItem)) {
             return false;
         }
-        return id != null && id.equals(((Item) o).id);
+        return id != null && id.equals(((SimpleItem) o).id);
     }
 
     @Override
@@ -234,9 +167,6 @@ public class Item implements Serializable {
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
             ", price=" + getPrice() +
-            ", stock=" + getStock() +
-            ", description='" + getDescription() + "'" +
-            ", productDetails='" + getProductDetails() + "'" +
             ", cover='" + getCover() + "'" +
             ", coverContentType='" + getCoverContentType() + "'" +
             ", inclusionDate='" + getInclusionDate() + "'" +

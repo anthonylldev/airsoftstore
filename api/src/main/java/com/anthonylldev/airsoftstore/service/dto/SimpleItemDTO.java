@@ -1,16 +1,17 @@
 package com.anthonylldev.airsoftstore.service.dto;
 
+import javax.persistence.Lob;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import javax.persistence.Lob;
-import javax.validation.constraints.*;
 
 /**
- * A DTO for the {@link com.anthonylldev.airsoftstore.domain.Item} entity.
+ * A simple DTO the {@link com.anthonylldev.airsoftstore.domain.Item} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class ItemDTO implements Serializable {
+public class SimpleItemDTO implements Serializable {
 
     private Long id;
 
@@ -25,17 +26,10 @@ public class ItemDTO implements Serializable {
     @Min(value = 0)
     private Integer stock;
 
-    private String description;
-
-    private String productDetails;
-
     @Lob
     private byte[] cover;
 
     private String coverContentType;
-    private BrandDTO brand;
-
-    private SubCategoryDTO subCategory;
 
     private LocalDateTime inclusionDate;
 
@@ -71,22 +65,6 @@ public class ItemDTO implements Serializable {
         this.stock = stock;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getProductDetails() {
-        return productDetails;
-    }
-
-    public void setProductDetails(String productDetails) {
-        this.productDetails = productDetails;
-    }
-
     public byte[] getCover() {
         return cover;
     }
@@ -103,22 +81,6 @@ public class ItemDTO implements Serializable {
         this.coverContentType = coverContentType;
     }
 
-    public BrandDTO getBrand() {
-        return brand;
-    }
-
-    public void setBrand(BrandDTO brand) {
-        this.brand = brand;
-    }
-
-    public SubCategoryDTO getSubCategory() {
-        return subCategory;
-    }
-
-    public void setSubCategory(SubCategoryDTO subCategory) {
-        this.subCategory = subCategory;
-    }
-
     public LocalDateTime getInclusionDate() {
         return inclusionDate;
     }
@@ -128,24 +90,24 @@ public class ItemDTO implements Serializable {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(this.id);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof ItemDTO)) {
+        if (!(o instanceof SimpleItemDTO)) {
             return false;
         }
 
-        ItemDTO itemDTO = (ItemDTO) o;
+        SimpleItemDTO simpleItemDTO = (SimpleItemDTO) o;
         if (this.id == null) {
             return false;
         }
-        return Objects.equals(this.id, itemDTO.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.id);
+        return Objects.equals(this.id, simpleItemDTO.id);
     }
 
     // prettier-ignore
@@ -156,11 +118,6 @@ public class ItemDTO implements Serializable {
             ", title='" + getTitle() + "'" +
             ", price=" + getPrice() +
             ", stock=" + getStock() +
-            ", description='" + getDescription() + "'" +
-            ", productDetails='" + getProductDetails() + "'" +
-            ", cover='" + getCover() + "'" +
-            ", brand=" + getBrand() +
-            ", subCategory=" + getSubCategory() +
             ", inclusionDate=" + getInclusionDate() +
             "}";
     }

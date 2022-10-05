@@ -24,4 +24,5 @@
     <include file="config/liquibase/changelog/20221004103500_added_constraint_in_subCategory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221004123400_added_column_in_Item.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221005175300_added_view_simple_item.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221005191000_delete_view_simple_item.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

@@ -25,4 +25,38 @@
             select id, title, price, cover, cover_content_type, inclusion_date from item
         </createView>
     </changeSet>
+
+    <changeSet author="anthony-leon" id="20221005175300-3">
+        <createView catalogName="airsofstore"
+                    schemaName="public"
+                    encoding="UTF-8"
+                    fullDefinition="false"
+                    replaceIfExists="true"
+                    viewName="v_simple_item">
+            select id, title, price, cover, cover_content_type, inclusion_date from item
+        </createView>
+    </changeSet>
+
+    <changeSet author="anthony-leon" id="20221005175300-4">
+        <createView catalogName="airsofstore"
+                    schemaName="public"
+                    encoding="UTF-8"
+                    fullDefinition="false"
+                    replaceIfExists="true"
+                    viewName="v_simple_item">
+            select id, title, price, cover, cover_content_type, inclusion_date, stock from item
+        </createView>
+    </changeSet>
+
+    <changeSet author="anthony-leon" id="20221005175300-5">
+        <createView catalogName="airsofstore"
+                    schemaName="public"
+                    encoding="UTF-8"
+                    fullDefinition="false"
+                    replaceIfExists="true"
+                    viewName="v_simple_item">
+            select id, title, price, cover, cover_content_type, inclusion_date, stock, brand_id, sub_category_id from item
+        </createView>
+    </changeSet>
+
 </databaseChangeLog>

@@ -21,8 +21,16 @@
     </button>
   </div>
   <div class="row subCategory-container">
-    <div class="col-md-4" *ngFor="let subCategory of mostPopularSubCategories">
+    <div class="col-12 col-sm-6 col-md-4" *ngFor="let subCategory of mostPopularSubCategories">
       <jhi-card [item]="subCategory"></jhi-card>
+    </div>
+  </div>
+  <div class="row items-container">
+    <div class="col-md-12">
+      <h4 jhiTranslate="home.newsTitle">RELEASES</h4>
+    </div>
+    <div class="col-12 col-sm-6 col-md-3" *ngFor="let item of itemsNews">
+      {{ item.title }}, {{ item.inclusionDate | date: "dd/MM/yyyy" }}
     </div>
   </div>
 </div>

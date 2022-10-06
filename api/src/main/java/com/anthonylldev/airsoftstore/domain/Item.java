@@ -9,6 +9,13 @@ import javax.validation.constraints.*;
 /**
  * A Item.
  */
+@NamedEntityGraph(
+    name = "item-brand-subCategory",
+    attributeNodes = {
+        @NamedAttributeNode("brand"),
+        @NamedAttributeNode("subCategory")
+    }
+)
 @Entity
 @Table(name = "item")
 @SuppressWarnings("common-java:DuplicatedBlocks")

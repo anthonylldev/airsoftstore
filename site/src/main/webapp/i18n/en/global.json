@@ -93,7 +93,8 @@
     "card": {
       "item": {
         "addToCart": "Add to Cart",
-        "outOfStock": "Out of stock"
+        "outOfStock": "Out of stock",
+        "view": "Ver"
       }
     }
   },

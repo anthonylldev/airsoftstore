@@ -7,7 +7,6 @@ export interface IItem {
   price?: number | null;
   stock?: number | null;
   description?: string | null;
-  productDetails?: string | null;
   cover?: string | null;
   coverContentType?: string | null;
   brand?: Pick<IBrand, 'id' | 'title'> | null;

@@ -27,8 +27,6 @@ public class ItemDTO implements Serializable {
 
     private String description;
 
-    private String productDetails;
-
     @Lob
     private byte[] cover;
 
@@ -77,14 +75,6 @@ public class ItemDTO implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getProductDetails() {
-        return productDetails;
-    }
-
-    public void setProductDetails(String productDetails) {
-        this.productDetails = productDetails;
     }
 
     public byte[] getCover() {
@@ -157,7 +147,6 @@ public class ItemDTO implements Serializable {
             ", price=" + getPrice() +
             ", stock=" + getStock() +
             ", description='" + getDescription() + "'" +
-            ", productDetails='" + getProductDetails() + "'" +
             ", cover='" + getCover() + "'" +
             ", brand=" + getBrand() +
             ", subCategory=" + getSubCategory() +

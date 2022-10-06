@@ -39,9 +39,6 @@ public class Item implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "product_details")
-    private String productDetails;
-
     @Lob
     @Column(name = "cover")
     private byte[] cover;
@@ -128,19 +125,6 @@ public class Item implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getProductDetails() {
-        return this.productDetails;
-    }
-
-    public Item productDetails(String productDetails) {
-        this.setProductDetails(productDetails);
-        return this;
-    }
-
-    public void setProductDetails(String productDetails) {
-        this.productDetails = productDetails;
     }
 
     public byte[] getCover() {
@@ -236,7 +220,6 @@ public class Item implements Serializable {
             ", price=" + getPrice() +
             ", stock=" + getStock() +
             ", description='" + getDescription() + "'" +
-            ", productDetails='" + getProductDetails() + "'" +
             ", cover='" + getCover() + "'" +
             ", coverContentType='" + getCoverContentType() + "'" +
             ", inclusionDate='" + getInclusionDate() + "'" +

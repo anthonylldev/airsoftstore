@@ -31,8 +31,6 @@ public class ItemCriteria implements Serializable, Criteria {
 
     private StringFilter description;
 
-    private StringFilter productDetails;
-
     private LongFilter brandId;
 
     private LongFilter subCategoryId;
@@ -47,7 +45,6 @@ public class ItemCriteria implements Serializable, Criteria {
         this.price = other.price == null ? null : other.price.copy();
         this.stock = other.stock == null ? null : other.stock.copy();
         this.description = other.description == null ? null : other.description.copy();
-        this.productDetails = other.productDetails == null ? null : other.productDetails.copy();
         this.brandId = other.brandId == null ? null : other.brandId.copy();
         this.subCategoryId = other.subCategoryId == null ? null : other.subCategoryId.copy();
         this.distinct = other.distinct;
@@ -133,21 +130,6 @@ public class ItemCriteria implements Serializable, Criteria {
         this.description = description;
     }
 
-    public StringFilter getProductDetails() {
-        return productDetails;
-    }
-
-    public StringFilter productDetails() {
-        if (productDetails == null) {
-            productDetails = new StringFilter();
-        }
-        return productDetails;
-    }
-
-    public void setProductDetails(StringFilter productDetails) {
-        this.productDetails = productDetails;
-    }
-
     public LongFilter getBrandId() {
         return brandId;
     }
@@ -201,7 +183,6 @@ public class ItemCriteria implements Serializable, Criteria {
             Objects.equals(price, that.price) &&
             Objects.equals(stock, that.stock) &&
             Objects.equals(description, that.description) &&
-            Objects.equals(productDetails, that.productDetails) &&
             Objects.equals(brandId, that.brandId) &&
             Objects.equals(subCategoryId, that.subCategoryId) &&
             Objects.equals(distinct, that.distinct)
@@ -210,7 +191,7 @@ public class ItemCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, price, stock, description, productDetails, brandId, subCategoryId, distinct);
+        return Objects.hash(id, title, price, stock, description, brandId, subCategoryId, distinct);
     }
 
     // prettier-ignore
@@ -222,7 +203,6 @@ public class ItemCriteria implements Serializable, Criteria {
             (price != null ? "price=" + price + ", " : "") +
             (stock != null ? "stock=" + stock + ", " : "") +
             (description != null ? "description=" + description + ", " : "") +
-            (productDetails != null ? "productDetails=" + productDetails + ", " : "") +
             (brandId != null ? "brandId=" + brandId + ", " : "") +
             (subCategoryId != null ? "subCategoryId=" + subCategoryId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +

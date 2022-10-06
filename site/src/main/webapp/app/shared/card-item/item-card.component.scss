@@ -1,4 +1,4 @@
-@import "../../../content/scss/bootstrap-variables";
+@import '../../../content/scss/bootstrap-variables';
 
 .card {
   margin-bottom: 24px;
@@ -10,8 +10,23 @@
     font-weight: bold;
   }
 
-  .card-body {
-    color: black;
+  .card-img {
+    width: 100%;
+    height: 200px;
+
+    img {
+      height: 100%;
+      width: 100%;
+      max-height: 100vh;
+      max-width: 110vh;
+      object-fit: cover;
+      transition: 0.5s;
+    }
+
+    button {
+      display: none;
+      transition: 0.5s;
+    }
   }
 
   .card-footer {
@@ -39,20 +54,30 @@
     }
   }
 
-  .card-img {
-    width: 100%;
-    height: 200px;
-
-    img {
-      height: 100%;
-      width: 100%;
-      max-height: 100vh;
-      max-width: 110vh;
-      object-fit: cover;
-    }
-  }
-
   &:hover {
+    .card-img {
+
+      img {
+        filter: blur(3px);
+      }
+
+      .btn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        background-color: black;
+        color: white;
+        font-size: 16px;
+        padding: 12px 24px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        display: block;
+      }
+    }
+
     .card-footer {
       button {
         box-shadow: 0 0 10px black;
@@ -60,4 +85,3 @@
     }
   }
 }
-

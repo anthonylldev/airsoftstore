@@ -64,12 +64,6 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="productDetails">
-            <div class="d-flex">
-              <span jhiTranslate="airsoftstoreApp.item.productDetails">Product Details</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" jhiSortBy="cover">
             <div class="d-flex">
               <span jhiTranslate="airsoftstoreApp.item.cover">Cover</span>
@@ -100,7 +94,6 @@
           <td>{{ item.price }}</td>
           <td>{{ item.stock }}</td>
           <td>{{ item.description }}</td>
-          <td>{{ item.productDetails }}</td>
           <td>
             <a *ngIf="item.cover" (click)="openFile(item.cover, item.coverContentType)">
               <img [src]="'data:' + item.coverContentType + ';base64,' + item.cover" style="max-height: 30px" alt="item image" />

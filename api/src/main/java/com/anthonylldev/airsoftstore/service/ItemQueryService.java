@@ -5,9 +5,12 @@ import com.anthonylldev.airsoftstore.domain.Item;
 import com.anthonylldev.airsoftstore.repository.ItemRepository;
 import com.anthonylldev.airsoftstore.service.criteria.ItemCriteria;
 import com.anthonylldev.airsoftstore.service.dto.ItemDTO;
+import com.anthonylldev.airsoftstore.service.dto.SimpleItemDTO;
 import com.anthonylldev.airsoftstore.service.mapper.ItemMapper;
 import java.util.List;
 import javax.persistence.criteria.JoinType;
+
+import com.anthonylldev.airsoftstore.service.mapper.SimpleItemMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -33,9 +36,12 @@ public class ItemQueryService extends QueryService<Item> {
 
     private final ItemMapper itemMapper;
 
-    public ItemQueryService(ItemRepository itemRepository, ItemMapper itemMapper) {
+    private final SimpleItemMapper simpleItemMapper;
+
+    public ItemQueryService(ItemRepository itemRepository, ItemMapper itemMapper, SimpleItemMapper simpleItemMapper) {
         this.itemRepository = itemRepository;
         this.itemMapper = itemMapper;
+        this.simpleItemMapper = simpleItemMapper;
     }
 
     /**
@@ -51,16 +57,16 @@ public class ItemQueryService extends QueryService<Item> {
     }
 
     /**
-     * Return a {@link Page} of {@link ItemDTO} which matches the criteria from the database.
+     * Return a {@link Page} of {@link SimpleItemDTO} which matches the criteria from the database.
      * @param criteria The object which holds all the filters, which the entities should match.
      * @param page The page, which should be returned.
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public Page<ItemDTO> findByCriteria(ItemCriteria criteria, Pageable page) {
+    public Page<SimpleItemDTO> findByCriteria(ItemCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<Item> specification = createSpecification(criteria);
-        return itemRepository.findAll(specification, page).map(itemMapper::toDto);
+        return itemRepository.findAll(specification, page).map(simpleItemMapper::toDto);
     }
 
     /**
@@ -101,9 +107,6 @@ public class ItemQueryService extends QueryService<Item> {
             }
             if (criteria.getDescription() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getDescription(), Item_.description));
-            }
-            if (criteria.getProductDetails() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getProductDetails(), Item_.productDetails));
             }
             if (criteria.getBrandId() != null) {
                 specification =

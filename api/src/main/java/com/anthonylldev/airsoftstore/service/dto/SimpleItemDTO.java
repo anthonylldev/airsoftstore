@@ -1,16 +1,15 @@
 package com.anthonylldev.airsoftstore.service.dto;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Objects;
 import javax.persistence.Lob;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 /**
  * A DTO for the {@link com.anthonylldev.airsoftstore.domain.Item} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class ItemDTO implements Serializable {
+public class SimpleItemDTO {
 
     private Long id;
 
@@ -31,11 +30,6 @@ public class ItemDTO implements Serializable {
     private byte[] cover;
 
     private String coverContentType;
-    private BrandDTO brand;
-
-    private SubCategoryDTO subCategory;
-
-    private LocalDateTime inclusionDate;
 
     public Long getId() {
         return id;
@@ -93,44 +87,20 @@ public class ItemDTO implements Serializable {
         this.coverContentType = coverContentType;
     }
 
-    public BrandDTO getBrand() {
-        return brand;
-    }
-
-    public void setBrand(BrandDTO brand) {
-        this.brand = brand;
-    }
-
-    public SubCategoryDTO getSubCategory() {
-        return subCategory;
-    }
-
-    public void setSubCategory(SubCategoryDTO subCategory) {
-        this.subCategory = subCategory;
-    }
-
-    public LocalDateTime getInclusionDate() {
-        return inclusionDate;
-    }
-
-    public void setInclusionDate(LocalDateTime inclusionDate) {
-        this.inclusionDate = inclusionDate;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof ItemDTO)) {
+        if (!(o instanceof SimpleItemDTO)) {
             return false;
         }
 
-        ItemDTO itemDTO = (ItemDTO) o;
+        SimpleItemDTO simpleItemDTO = (SimpleItemDTO) o;
         if (this.id == null) {
             return false;
         }
-        return Objects.equals(this.id, itemDTO.id);
+        return Objects.equals(this.id, simpleItemDTO.id);
     }
 
     @Override
@@ -148,9 +118,6 @@ public class ItemDTO implements Serializable {
             ", stock=" + getStock() +
             ", description='" + getDescription() + "'" +
             ", cover='" + getCover() + "'" +
-            ", brand=" + getBrand() +
-            ", subCategory=" + getSubCategory() +
-            ", inclusionDate=" + getInclusionDate() +
             "}";
     }
 }

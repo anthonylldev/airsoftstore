@@ -2,16 +2,20 @@ package com.anthonylldev.airsoftstore.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
 /**
  * A Item.
  */
+@NamedEntityGraph(
+    name = "item-brand-subCategory",
+    attributeNodes = {
+        @NamedAttributeNode("brand"),
+        @NamedAttributeNode("subCategory")
+    }
+)
 @Entity
 @Table(name = "item")
 @SuppressWarnings("common-java:DuplicatedBlocks")
@@ -42,9 +46,6 @@ public class Item implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "product_details")
-    private String productDetails;
-
     @Lob
     @Column(name = "cover")
     private byte[] cover;
@@ -62,6 +63,7 @@ public class Item implements Serializable {
     @JsonIgnoreProperties(value = { "category", "items" }, allowSetters = true)
     private SubCategory subCategory;
 
+    @NotNull
     @Column(name = "inclusion_date")
     private LocalDateTime inclusionDate;
 
@@ -132,19 +134,6 @@ public class Item implements Serializable {
         this.description = description;
     }
 
-    public String getProductDetails() {
-        return this.productDetails;
-    }
-
-    public Item productDetails(String productDetails) {
-        this.setProductDetails(productDetails);
-        return this;
-    }
-
-    public void setProductDetails(String productDetails) {
-        this.productDetails = productDetails;
-    }
-
     public byte[] getCover() {
         return this.cover;
     }
@@ -201,6 +190,11 @@ public class Item implements Serializable {
         return inclusionDate;
     }
 
+    public Item inclusionDate(LocalDateTime inclusionDate) {
+        this.inclusionDate = inclusionDate;
+        return this;
+    }
+
     public void setInclusionDate(LocalDateTime inclusionDate) {
         this.inclusionDate = inclusionDate;
     }
@@ -233,7 +227,6 @@ public class Item implements Serializable {
             ", price=" + getPrice() +
             ", stock=" + getStock() +
             ", description='" + getDescription() + "'" +
-            ", productDetails='" + getProductDetails() + "'" +
             ", cover='" + getCover() + "'" +
             ", coverContentType='" + getCoverContentType() + "'" +
             ", inclusionDate='" + getInclusionDate() + "'" +

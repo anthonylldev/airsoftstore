@@ -4,11 +4,12 @@
   </div>
   <div class="card-img">
     <img [src]="'data:' + item.coverContentType + ';base64,' + item.cover" class="card-img-top" alt="item image" />
+    <button class="btn" jhiTranslate="global.card.item.view" (click)="navToItem()">View</button>
   </div>
   <div class="card-footer">
     <p>{{ item.price | currency: 'EUR' }}</p>
     <div *ngIf="item.stock">
-      <button  *ngIf="item.stock > 0">
+      <button *ngIf="item.stock > 0">
         <span>
           <fa-icon [icon]="faCartShopping"></fa-icon>
           <span jhiTranslate="global.card.item.addToCart">Out of stock</span>

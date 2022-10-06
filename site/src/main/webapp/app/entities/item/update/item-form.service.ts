@@ -22,7 +22,6 @@ type ItemFormGroupContent = {
   price: FormControl<IItem['price']>;
   stock: FormControl<IItem['stock']>;
   description: FormControl<IItem['description']>;
-  productDetails: FormControl<IItem['productDetails']>;
   cover: FormControl<IItem['cover']>;
   coverContentType: FormControl<IItem['coverContentType']>;
   brand: FormControl<IItem['brand']>;
@@ -57,7 +56,6 @@ export class ItemFormService {
         validators: [Validators.required, Validators.min(0)],
       }),
       description: new FormControl(itemRawValue.description),
-      productDetails: new FormControl(itemRawValue.productDetails),
       cover: new FormControl(itemRawValue.cover),
       coverContentType: new FormControl(itemRawValue.coverContentType),
       brand: new FormControl(itemRawValue.brand, {

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.15.xsd">
+
+    <changeSet author="anthony-leon" id="20221005175300-1">
+        <createView catalogName="airsoftore"
+                    schemaName="public"
+                    fullDefinition="false"
+                    replaceIfExists="false"
+                    viewName="v_simple_item">
+            select id, title, price, cover, cover_content_type, inclusion_date from item
+        </createView>
+    </changeSet>
+
+    <changeSet author="anthony-leon" id="20221005175300-2">
+        <createView catalogName="airsoftore"
+                    schemaName="public"
+                    encoding="UTF-8"
+                    fullDefinition="false"
+                    replaceIfExists="true"
+                    viewName="v_simple_item">
+            select id, title, price, cover, cover_content_type, inclusion_date from item
+        </createView>
+    </changeSet>
+
+    <changeSet author="anthony-leon" id="20221005175300-3">
+        <createView catalogName="airsofstore"
+                    schemaName="public"
+                    encoding="UTF-8"
+                    fullDefinition="false"
+                    replaceIfExists="true"
+                    viewName="v_simple_item">
+            select id, title, price, cover, cover_content_type, inclusion_date from item
+        </createView>
+    </changeSet>
+
+    <changeSet author="anthony-leon" id="20221005175300-4">
+        <createView catalogName="airsofstore"
+                    schemaName="public"
+                    encoding="UTF-8"
+                    fullDefinition="false"
+                    replaceIfExists="true"
+                    viewName="v_simple_item">
+            select id, title, price, cover, cover_content_type, inclusion_date, stock from item
+        </createView>
+    </changeSet>
+
+    <changeSet author="anthony-leon" id="20221005175300-5">
+        <createView catalogName="airsofstore"
+                    schemaName="public"
+                    encoding="UTF-8"
+                    fullDefinition="false"
+                    replaceIfExists="true"
+                    viewName="v_simple_item">
+            select id, title, price, cover, cover_content_type, inclusion_date, stock, brand_id, sub_category_id from item
+        </createView>
+    </changeSet>
+
+</databaseChangeLog>

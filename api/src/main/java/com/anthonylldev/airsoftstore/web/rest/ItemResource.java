@@ -6,6 +6,7 @@ import com.anthonylldev.airsoftstore.service.ItemQueryService;
 import com.anthonylldev.airsoftstore.service.ItemService;
 import com.anthonylldev.airsoftstore.service.criteria.ItemCriteria;
 import com.anthonylldev.airsoftstore.service.dto.ItemDTO;
+import com.anthonylldev.airsoftstore.service.dto.SimpleItemDTO;
 import com.anthonylldev.airsoftstore.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -154,13 +155,13 @@ public class ItemResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of items in body.
      */
     @GetMapping("/items")
-    public ResponseEntity<List<ItemDTO>> getAllItems(
+    public ResponseEntity<List<SimpleItemDTO>> getAllItems(
         ItemCriteria criteria,
         @org.springdoc.api.annotations.ParameterObject Pageable pageable
     ) {
         log.debug("REST request to get Items by criteria: {}", criteria);
 
-        Page<ItemDTO> page = itemQueryService.findByCriteria(criteria, pageable);
+        Page<SimpleItemDTO> page = itemQueryService.findByCriteria(criteria, pageable);
         this.subCategoryAccessCounterIncreaseService.increase(criteria);
 
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);

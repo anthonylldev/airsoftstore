@@ -1,0 +1,138 @@
+.item-container {
+  margin-top: 50px;
+  // background-color: #eeeee4;
+  box-shadow: 5px 5px 20px black;
+  background-color: white;
+  width: 100%;
+  padding: 24px;
+
+  .img-item-container {
+    object-fit: cover;
+    box-sizing: border-box;
+
+    img {
+      border: 5px solid #1d1d1d;
+      box-shadow: 5px 5px 15px black;
+      transition: 0.5s;
+      cursor: zoom-in;
+
+      &:hover {
+        box-shadow: 0 0 25px 10px black;
+      }
+    }
+  }
+
+  .detail-container {
+    h2 {
+      font-size: 2em;
+      font-weight: bold;
+    }
+
+    .brand {
+      font-weight: bold;
+    }
+
+    .brand-title {
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
+
+    .last-price {
+      color: red;
+      text-decoration: line-through;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+
+    .price {
+      font-weight: bold;
+      font-size: 1.5em;
+    }
+
+    .discount {
+      background-color: red;
+      color: white;
+      text-align: center;
+    }
+
+    .out-of-stock {
+      text-align: center;
+      font-weight: bold;
+      color: red;
+      font-size: 1.2em;
+    }
+
+    hr {
+      background-color: black;
+      height: 2px;
+      border: 0;
+    }
+
+    .quantity {
+      button {
+        height: 35px;
+        width: 35px;
+        border: none;
+        margin: 0;
+        padding: 1px;
+        color: white;
+        background-color: #1d1d1d;
+        text-align: center;
+        font-weight: bold;
+        transition: 0.5s;
+
+        &:hover {
+          box-shadow: 0 0 10px black;
+        }
+      }
+
+      .decrease {
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+
+      }
+
+      .increase {
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+
+      input {
+        border: none;
+        margin: 0;
+        height: 35px;
+        width: 50px;
+        border: 2px solid #1d1d1d;
+        font-size: 1.1em;
+        text-align: center;
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+      }
+    }
+
+    .add-to-cart {
+      color: white;
+      padding: 5px 10px;
+      border-radius: 10px;
+      border: none;
+      background-color: black;
+      transition: 0.5s;
+
+      span {
+        fa-icon {
+          margin-right: 2px;
+        }
+      }
+
+      &:hover {
+        box-shadow: 0 0 10px black;
+      }
+    }
+  }
+}

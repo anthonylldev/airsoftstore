@@ -15,7 +15,9 @@
         "question": "Are you sure you want to delete Item {{ id }}?"
       },
       "detail": {
-        "title": "Item"
+        "title": "Item",
+        "brand": "Brand",
+        "quantity": "Quantity"
       },
       "id": "ID",
       "title": "Title",

@@ -41,6 +41,10 @@ export class ItemDetailComponent implements OnInit {
     // TODO Nav to items filter by brand
   }
 
+  navToSubCategory(): void {
+    // TODO Nav to items filter by subCategory
+  }
+
   addToCart(): void {
     // TODO Add to cart
   }

@@ -1,38 +1,76 @@
+@import '../../../../content/scss/bootstrap-variables';
+
 .item-container {
-  margin-top: 50px;
-  // background-color: #eeeee4;
-  box-shadow: 5px 5px 20px black;
-  background-color: white;
   width: 100%;
-  padding: 24px;
+
+  h2 {
+    color: #e3dac9;
+    font-weight: 900;
+    font-size: 10em;
+    opacity: 0.5;
+
+    @media (max-width: $xxl) {
+      font-size: 11em;
+    }
+
+    @media (max-width: $xxl) {
+      font-size: 10em;
+    }
+
+    @media (max-width: $lg) {
+      font-size: 8em;
+    }
+
+    @media (max-width: $md) {
+      font-size: 2em;
+      margin-bottom: 5px;
+      text-align: center;
+    }
+  }
 
   .img-item-container {
     object-fit: cover;
     box-sizing: border-box;
 
     img {
-      border: 5px solid #1d1d1d;
       box-shadow: 5px 5px 15px black;
       transition: 0.5s;
       cursor: zoom-in;
-
-      &:hover {
-        box-shadow: 0 0 25px 10px black;
-      }
     }
   }
 
   .detail-container {
-    h2 {
-      font-size: 2em;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 20px;
+    color: white;
+
+    .sub-category {
       font-weight: bold;
+      font-size: 1.2em;
+    }
+
+    .sub-category-title {
+      font-size: 1.2em;
+
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
     }
 
     .brand {
+      font-size: 1.2em;
       font-weight: bold;
     }
 
     .brand-title {
+      font-size: 1.2em;
+
       &:hover {
         cursor: pointer;
         text-decoration: underline;
@@ -65,7 +103,7 @@
     }
 
     hr {
-      background-color: black;
+      background-color: white;
       height: 2px;
       border: 0;
     }
@@ -91,7 +129,6 @@
       .decrease {
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
-
       }
 
       .increase {
@@ -133,6 +170,15 @@
       &:hover {
         box-shadow: 0 0 10px black;
       }
+
+      @media (max-width: $xl) {
+        margin-top: 15px;
+          width: 100%;
+      }
+    }
+
+    @media (max-width: $md) {
+      margin-top: 20px;
     }
   }
 }

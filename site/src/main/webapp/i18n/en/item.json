@@ -17,7 +17,8 @@
       "detail": {
         "title": "Item",
         "brand": "Brand",
-        "quantity": "Quantity"
+        "quantity": "Quantity",
+        "subCategory":"Sub Category"
       },
       "id": "ID",
       "title": "Title",

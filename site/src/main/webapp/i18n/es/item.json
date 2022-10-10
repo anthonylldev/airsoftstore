@@ -15,7 +15,10 @@
         "question": "¿Seguro que quiere eliminar Item {{ id }}?"
       },
       "detail": {
-        "title": "Item"
+        "title": "Item",
+        "brand": "Marca",
+        "quantity": "Cantidad",
+        "subCategory": "Sub categoria"
       },
       "id": "ID",
       "title": "Title",

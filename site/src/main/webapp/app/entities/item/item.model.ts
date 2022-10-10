@@ -12,6 +12,7 @@ export interface IItem {
   brand?: Pick<IBrand, 'id' | 'title'> | null;
   subCategory?: Pick<ISubCategory, 'id' | 'title'> | null;
   inclusionDate?: Date | null;
+  discount?: number | null;
 }
 
 

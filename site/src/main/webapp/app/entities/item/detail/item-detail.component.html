@@ -1,65 +1,75 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    <div *ngIf="item">
-      <h2 data-cy="itemDetailsHeading"><span jhiTranslate="airsoftstoreApp.item.detail.title">Item</span></h2>
-
-      <hr />
-
-      <jhi-alert-error></jhi-alert-error>
-
-      <jhi-alert></jhi-alert>
-
-      <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="global.field.id">ID</span></dt>
-        <dd>
-          <span>{{ item.id }}</span>
-        </dd>
-        <dt><span jhiTranslate="airsoftstoreApp.item.title">Title</span></dt>
-        <dd>
-          <span>{{ item.title }}</span>
-        </dd>
-        <dt><span jhiTranslate="airsoftstoreApp.item.price">Price</span></dt>
-        <dd>
-          <span>{{ item.price }}</span>
-        </dd>
-        <dt><span jhiTranslate="airsoftstoreApp.item.stock">Stock</span></dt>
-        <dd>
-          <span>{{ item.stock }}</span>
-        </dd>
-        <dt><span jhiTranslate="airsoftstoreApp.item.description">Description</span></dt>
-        <dd>
-          <span>{{ item.description }}</span>
-        </dd>
-        <dt><span jhiTranslate="airsoftstoreApp.item.cover">Cover</span></dt>
-        <dd>
-          <div *ngIf="item.cover">
-            <a (click)="openFile(item.cover, item.coverContentType)">
-              <img [src]="'data:' + item.coverContentType + ';base64,' + item.cover" style="max-width: 100%" alt="item image" />
-            </a>
-            {{ item.coverContentType }}, {{ byteSize(item.cover) }}
-          </div>
-        </dd>
-        <dt><span jhiTranslate="airsoftstoreApp.item.brand">Brand</span></dt>
-        <dd>
-          <div *ngIf="item.brand">
-            <a [routerLink]="['/brand', item.brand.id, 'view']">{{ item.brand.title }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="airsoftstoreApp.item.subCategory">Sub Category</span></dt>
-        <dd>
-          <div *ngIf="item.subCategory">
-            <a [routerLink]="['/sub-category', item.subCategory.id, 'view']">{{ item.subCategory.title }}</a>
-          </div>
-        </dd>
-      </dl>
-
-      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
-      </button>
-
-      <button type="button" [routerLink]="['/item', item.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
-      </button>
+<div class="container item-container" *ngIf="item">
+  <div class="row justify-content-between">
+    <h2>{{ item.title }}</h2>
+    <div class="img-item-container col-md-5">
+      <div *ngIf="item.cover">
+        <a (click)="openFile(item.cover, item.coverContentType)">
+          <img class="img-fluid" [src]="'data:' + item.coverContentType + ';base64,' + item.cover" alt="item image" />
+        </a>
+      </div>
     </div>
+    <div class="detail-container col-md-6 d-flex flex-column justify-content-between">
+      <div class="row">
+        <div class="col-md-12 col-lg-12 col-xl-6">
+          <p>
+            <span class="sub-category" jhiTranslate="airsoftstoreApp.item.detail.subCategory">SubCategory</span>:&nbsp;&nbsp;
+            <span class="sub-category-title" (click)="navToSubCategory()">{{ item.subCategory?.title }}</span>
+          </p>
+        </div>
+        <div class="col-md-12 col-lg-12 col-xl-6">
+          <p>
+            <span class="brand" jhiTranslate="airsoftstoreApp.item.detail.brand">Brand</span>:&nbsp;&nbsp;
+            <span class="brand-title" (click)="navToBrand()">{{ item.brand?.title }}</span>
+          </p>
+        </div>
+      </div>
+      <div class="row" *ngIf="!item.discount && item.price">
+        <div class="price col-12">{{ item.price | currency: 'EUR' }}</div>
+      </div>
+      <div class="row align-items-center" *ngIf="item.discount && item.price">
+        <div class="last-price col-md-6 col-xl-4">
+          {{ item.price | currency: 'EUR' }}
+        </div>
+        <div class="price col-md-6 col-xl-4">
+          {{ item.price - (item.price * item.discount) / 100 | currency: 'EUR' }}
+        </div>
+        <div class="discount col-md-12 col-xl-4">AHORRA -{{ item.discount }}%</div>
+      </div>
+      <hr />
+      <div *ngIf="item.stock">
+        <div class="row align-items-center" *ngIf="item.stock > 0">
+          <div class="col-6 col-md-5 col-xl-3"><span jhiTranslate="airsoftstoreApp.item.detail.quantity">Quantity</span>:</div>
+          <div class="col-6 col-md-5 col-xl-4 quantity d-flex justify-content-center">
+            <button class="decrease" (click)="decreaseQuantity()">-</button>
+            <input type="number" [(ngModel)]="quantity" />
+            <button class="increase" (click)="increaseQuantity()">+</button>
+          </div>
+          <div class="col-md-12 col-xl-5 d-flex justify-content-center">
+            <button class="add-to-cart" (click)="addToCart()">
+              <span>
+                <fa-icon [icon]="faCartShopping"></fa-icon>
+                <span jhiTranslate="global.card.item.addToCart">Add to cart</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center" *ngIf="item.stock == 0">
+        <div class="col-md-6 out-of-stock">
+          <span  class="outOfStock">
+            <fa-icon [icon]="faBan"></fa-icon>
+            <span jhiTranslate="global.card.item.outOfStock">Out of stock</span>
+          </span>
+        </div>
+      </div>
+      <hr />
+      <div class="row">
+        <img src="../../../../content/images/item-detail-img.jpg" alt="imagen" />
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- DETAIL -->
   </div>
 </div>

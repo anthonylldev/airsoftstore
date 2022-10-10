@@ -1,18 +1,46 @@
 /* ==========================================================================
 Main page styles
 ========================================================================== */
+@import '../../content/scss/bootstrap-variables';
+
+.carousel {
+  box-shadow: 5px 5px 15px black;
+}
 
 .subCategory-container {
-  background-color: #1D1D1D;
-
   width: 100%;
   margin: 0 12px 0 0;
   padding: 24px 12px;
 }
 
 .items-container {
-  background-color: #1D1D1D;
-
+  width: 100%;
   margin: 0 0 0 0;
   padding: 24px 12px;
+}
+
+h2 {
+  color: #e3dac9;
+  font-weight: 900;
+  font-size: 13em;
+  margin-bottom: -75px;
+  opacity: 0.5;
+
+  @media (max-width: $xxl) {
+    font-size: 11em;
+  }
+
+  @media (max-width: $xxl) {
+    font-size: 10em;
+  }
+
+  @media (max-width: $lg) {
+    font-size: 8em;
+  }
+
+  @media (max-width: $md) {
+    font-size: 2em;
+    margin-bottom: 5px;
+    text-align: center;
+  }
 }

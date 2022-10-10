@@ -7,7 +7,13 @@
     <button class="btn" jhiTranslate="global.card.item.view" (click)="navToItem()">View</button>
   </div>
   <div class="card-footer">
-    <p>{{ item.price | currency: 'EUR' }}</p>
+    <p *ngIf="!item.discount">{{ item.price | currency: 'EUR' }}</p>
+
+    <p *ngIf="item.discount && item.price">
+      <span class="last-price">{{ item.price | currency: 'EUR' }}</span>&nbsp;<span>{{ item.price - (item.price * item.discount) / 100 | currency: 'EUR' }}</span>
+    </p>
+
+
     <div *ngIf="item.stock">
       <button *ngIf="item.stock > 0">
         <span>

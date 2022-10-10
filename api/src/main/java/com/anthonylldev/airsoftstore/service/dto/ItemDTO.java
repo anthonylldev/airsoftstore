@@ -37,6 +37,8 @@ public class ItemDTO implements Serializable {
 
     private LocalDateTime inclusionDate;
 
+    private Integer discount;
+
     public Long getId() {
         return id;
     }
@@ -117,6 +119,14 @@ public class ItemDTO implements Serializable {
         this.inclusionDate = inclusionDate;
     }
 
+    public Integer getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Integer discount) {
+        this.discount = discount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -151,6 +161,7 @@ public class ItemDTO implements Serializable {
             ", brand=" + getBrand() +
             ", subCategory=" + getSubCategory() +
             ", inclusionDate=" + getInclusionDate() +
+            ", discount=" + getDiscount() +
             "}";
     }
 }

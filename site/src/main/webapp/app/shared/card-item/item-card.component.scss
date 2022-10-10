@@ -34,6 +34,11 @@
     font-weight: bold;
     height: 94px;
 
+    .last-price {
+      color: red;
+      text-decoration: line-through;
+    }
+
     button {
       color: white;
       padding: 5px 10px;

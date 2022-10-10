@@ -67,6 +67,10 @@ public class Item implements Serializable {
     @Column(name = "inclusion_date")
     private LocalDateTime inclusionDate;
 
+    // Discount percentage
+    @Column(name = "discount")
+    private Integer discount;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -199,6 +203,19 @@ public class Item implements Serializable {
         this.inclusionDate = inclusionDate;
     }
 
+    public Integer getDiscount() {
+        return discount;
+    }
+
+    public Item discount(Integer discount) {
+        this.discount = discount;
+        return this;
+    }
+
+    public void setDiscount(Integer discount) {
+        this.discount = discount;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -230,6 +247,7 @@ public class Item implements Serializable {
             ", cover='" + getCover() + "'" +
             ", coverContentType='" + getCoverContentType() + "'" +
             ", inclusionDate='" + getInclusionDate() + "'" +
+            ", inclusionDate=" + getDiscount() +
             "}";
     }
 }

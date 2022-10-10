@@ -26,4 +26,5 @@
     <include file="config/liquibase/changelog/20221005175300_added_view_simple_item.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221005191000_delete_view_simple_item.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221006121000_delete_column_in_item.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221010100000_added_column_in_item.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

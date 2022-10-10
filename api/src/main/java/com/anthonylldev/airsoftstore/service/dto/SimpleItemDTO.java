@@ -31,6 +31,8 @@ public class SimpleItemDTO {
 
     private String coverContentType;
 
+    private Integer discount;
+
     public Long getId() {
         return id;
     }
@@ -87,6 +89,14 @@ public class SimpleItemDTO {
         this.coverContentType = coverContentType;
     }
 
+    public Integer getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Integer discount) {
+        this.discount = discount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -118,6 +128,7 @@ public class SimpleItemDTO {
             ", stock=" + getStock() +
             ", description='" + getDescription() + "'" +
             ", cover='" + getCover() + "'" +
+            ", discount=" + getDiscount() +
             "}";
     }
 }

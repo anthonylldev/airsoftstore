@@ -13,7 +13,7 @@
       font-size: 11em;
     }
 
-    @media (max-width: $xxl) {
+    @media (max-width: $xl) {
       font-size: 10em;
     }
 
@@ -147,8 +147,8 @@
 
         &::-webkit-outer-spin-button,
         &::-webkit-inner-spin-button {
-          -webkit-appearance: none;
           margin: 0;
+          appearance: none;
         }
       }
     }

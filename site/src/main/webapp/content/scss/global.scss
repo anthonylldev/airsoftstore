@@ -211,3 +211,17 @@ angular-cli removes postcss-rtl processed inline css, processed rules must be ad
 body {
   background: $dark;
 }
+
+ngb-pagination {
+  a {
+    color: white !important;
+  }
+
+  .active {
+    a {
+      background-color: white !important;
+      color: black !important;
+      box-shadow: none !important;
+    }
+  }
+}

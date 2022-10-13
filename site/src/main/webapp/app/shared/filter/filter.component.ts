@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IBrand } from 'app/entities/brand/brand.model';
+import { BrandService } from 'app/entities/brand/service/brand.service';
 import { ICategory } from 'app/entities/category/category.model';
 import { CategoryService } from 'app/entities/category/service/category.service';
 import { EntityArrayResponseType, SubCategoryService } from 'app/entities/sub-category/service/sub-category.service';
@@ -14,15 +15,17 @@ import { IFilterOptions } from './filter.model';
 export class FilterComponent implements OnInit {
   @Input() filters!: IFilterOptions;
   categories?: ICategory[];
-  brands?: IBrand;
+  brands?: IBrand[];
 
   constructor(
     private categoryService: CategoryService,
-    private subCategoryService: SubCategoryService
+    private subCategoryService: SubCategoryService,
+    private brandService: BrandService
   ) {}
 
   ngOnInit(): void {
     this.loadCategories();
+    this.loadBrands();
   }
 
   clearAllFilters(): void {
@@ -60,6 +63,7 @@ export class FilterComponent implements OnInit {
 
   private loadSubCategories(category: ICategory): void {
     const querySubCategoriesObject: any = {
+      sort: ["title,asc"],
       "categoryId.in": category.id
     };
 
@@ -77,6 +81,27 @@ export class FilterComponent implements OnInit {
   }
 
   private fillSubCategoryFromResponseBody(data: ISubCategory[] | null): ISubCategory[] {
+    return data ?? [];
+  }
+
+  private loadBrands(): void {
+    const queryBrandObject: any = {
+      sort: ["title,asc"]
+    };
+
+    this.brandService.query(queryBrandObject).subscribe({
+      next: (res: EntityArrayResponseType) => {
+        this.onBrandResponseSuccess(res);
+      },
+    });
+  }
+
+  private onBrandResponseSuccess(response: EntityArrayResponseType): void {
+    const dataFromBody = this.fillBrandFromResponseBody(response.body);
+    this.brands = dataFromBody;
+  }
+
+  private fillBrandFromResponseBody(data: IBrand[] | null): IBrand[] {
     return data ?? [];
   }
 }

@@ -5,6 +5,8 @@ export interface IFilterOptions {
   readonly filterChanges: Subject<FilterOption[]>;
   get filterOptions(): IFilterOption[];
   hasAnyFilterSet(): boolean;
+  hasFilterByName(name: string): boolean;
+  getFilterByName(name: string): IFilterOption | undefined;
   clear(): boolean;
   initializeFromParams(params: ParamMap): boolean;
   addFilter(name: string, ...values: string[]): boolean;
@@ -15,6 +17,7 @@ export interface IFilterOption {
   name: string;
   values: string[];
   nameAsQueryParam(): string;
+  addValue(...values: string[]): boolean;
 }
 
 export class FilterOption implements IFilterOption {
@@ -73,6 +76,30 @@ export class FilterOptions implements IFilterOptions {
 
   get filterOptions(): FilterOption[] {
     return this._filterOptions.filter(option => option.isSet());
+  }
+
+  hasFilterByName(name: string): boolean {
+    let hasFilter = false;
+
+    this.filterOptions.forEach(filter => {
+      if (filter.name === name) {
+        hasFilter = true;
+      }
+    });
+
+    return hasFilter;
+  }
+
+  getFilterByName(name: string): IFilterOption | undefined {
+    let filterOption: IFilterOption | undefined;
+
+    this.filterOptions.forEach(filter => {
+      if (filter.name === name) {
+        filterOption = filter;
+      }
+    });
+
+    return filterOption;
   }
 
   hasAnyFilterSet(): boolean {

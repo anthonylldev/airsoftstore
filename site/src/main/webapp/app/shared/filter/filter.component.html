@@ -42,14 +42,20 @@
             </div>
           </div>
         </div>
-        <hr>
+        <hr />
         <div class="form-check" *ngFor="let brand of brands">
-          <input class="form-check-input" type="checkbox" [value]="brand.id" [id]="brand.id">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [(ngModel)]="brand.selected"
+            [id]="brand.id"
+            (change)="brandFilterChange(brand)"
+          />
           <label class="form-check-label" for="flexCheckDefault">
             {{ brand.title }}
           </label>
         </div>
-        <br>
+        <br />
         <div class="row">
           <div class="col-12 d-flex justify-content-center">
             <button class="btn btn-primary btn-clean-all" (click)="clearAllFilters()">
@@ -57,20 +63,6 @@
             </button>
           </div>
         </div>
-        <!-- <span jhiTranslate="entity.filters.set">Following filters are set</span>
-        <fa-icon icon="times" (click)="clearAllFilters()" title="{{ 'entity.filters.clearAll' | translate }}"></fa-icon>
-        <ul>
-          <ng-container *ngFor="let filterOption of filters.filterOptions">
-            <li *ngFor="let value of filterOption.values">
-              <span>{{ filterOption.name }}:</span> {{ value }}
-              <fa-icon
-                icon="times"
-                (click)="clearFilter(filterOption.name, value)"
-                title="{{ 'entity.filters.clear' | translate }}"
-              ></fa-icon>
-            </li>
-          </ng-container>
-        </ul> -->
       </div>
     </div>
   </div>

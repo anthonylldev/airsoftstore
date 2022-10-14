@@ -14,6 +14,11 @@
     </h2>
     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
       <div class="accordion-body">
+        <h2 class="accordion-header" id="flush-headingOne">
+          <button class="accordion-button collapsed all-btn" type="button" (click)="subCategoryFilterChange()">
+            <span>All</span>
+          </button>
+        </h2>
         <div class="accordion accordion-flush" [id]="'#id' + category.id" *ngFor="let category of categories">
           <div class="accordion-item">
             <h2 class="accordion-header" id="flush-headingOne">
@@ -35,7 +40,11 @@
               [attr.data-bs-parent]="'#id' + category.id"
             >
               <div class="accordion-body">
-                <button class="btn-subCategory" *ngFor="let subCategory of category.subCategories">
+                <button
+                  class="btn-subCategory"
+                  *ngFor="let subCategory of category.subCategories"
+                  (click)="subCategoryFilterChange(subCategory)"
+                >
                   {{ subCategory.title }}
                 </button>
               </div>

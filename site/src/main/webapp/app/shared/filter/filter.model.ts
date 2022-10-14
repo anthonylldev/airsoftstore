@@ -6,11 +6,11 @@ export interface IFilterOptions {
   get filterOptions(): IFilterOption[];
   hasAnyFilterSet(): boolean;
   hasFilterByName(name: string): boolean;
-  getFilterByName(name: string): IFilterOption | undefined;
   clear(): boolean;
   initializeFromParams(params: ParamMap): boolean;
   addFilter(name: string, ...values: string[]): boolean;
-  removeFilter(name: string, value: string): boolean;
+  removeFilter(name: string, value?: string): boolean;
+  getFilterOptionByName(name: string): FilterOption | null;
 }
 
 export interface IFilterOption {
@@ -76,6 +76,18 @@ export class FilterOptions implements IFilterOptions {
 
   get filterOptions(): FilterOption[] {
     return this._filterOptions.filter(option => option.isSet());
+  }
+
+  getFilterOptionByName(name: string, add: true): FilterOption;
+  getFilterOptionByName(name: string, add: false): FilterOption | null;
+  getFilterOptionByName(name: string): FilterOption | null;
+  getFilterOptionByName(name: string, add = false): FilterOption | null {
+    const addOption = (option: FilterOption): FilterOption => {
+      this._filterOptions.push(option);
+      return option;
+    };
+
+    return this._filterOptions.find(thisOption => thisOption.name === name) ?? (add ? addOption(new FilterOption(name)) : null);
   }
 
   hasFilterByName(name: string): boolean {
@@ -144,11 +156,19 @@ export class FilterOptions implements IFilterOptions {
     return false;
   }
 
-  removeFilter(name: string, value: string): boolean {
-    if (this.getFilterOptionByName(name)?.removeValue(value)) {
+  removeFilter(name: string, value?: string): boolean {
+    if (value) {
+      if (this.getFilterOptionByName(name)?.removeValue(value)) {
+        this.changed();
+        return true;
+      }
+    } else {
+      const index = this._filterOptions.findIndex(filter => filter.name === name);
+      this._filterOptions.splice(index, 1);
       this.changed();
       return true;
     }
+
     return false;
   }
 
@@ -167,17 +187,5 @@ export class FilterOptions implements IFilterOptions {
 
   protected clone(): FilterOptions {
     return new FilterOptions(this.filterOptions.map(option => new FilterOption(option.name, option.values.concat())));
-  }
-
-  protected getFilterOptionByName(name: string, add: true): FilterOption;
-  protected getFilterOptionByName(name: string, add: false): FilterOption | null;
-  protected getFilterOptionByName(name: string): FilterOption | null;
-  protected getFilterOptionByName(name: string, add = false): FilterOption | null {
-    const addOption = (option: FilterOption): FilterOption => {
-      this._filterOptions.push(option);
-      return option;
-    };
-
-    return this._filterOptions.find(thisOption => thisOption.name === name) ?? (add ? addOption(new FilterOption(name)) : null);
   }
 }

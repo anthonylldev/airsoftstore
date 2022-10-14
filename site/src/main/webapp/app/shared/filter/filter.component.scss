@@ -9,7 +9,7 @@
 
   .accordion-item {
     button {
-      background-color: black;
+      background-color: #1d1d1d;
       color: white;
       font-weight: bold;
       text-shadow: none;
@@ -23,6 +23,12 @@
     .accordion-body {
       background-color: #1d1d1d;
       padding: 0;
+
+      .all-btn {
+        &::after {
+          content: none;
+        }
+      }
 
       .accordion-item {
         .accordion-button {

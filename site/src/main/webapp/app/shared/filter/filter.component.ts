@@ -1,13 +1,13 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { IBrandFilter } from 'app/entities/brand/brand-filter.model';
 import { BrandService } from 'app/entities/brand/service/brand.service';
 import { ICategoryFilter } from 'app/entities/category/category-filter.model';
 import { CategoryService } from 'app/entities/category/service/category.service';
 import { SubCategoryService } from 'app/entities/sub-category/service/sub-category.service';
 import { ISubCategory } from 'app/entities/sub-category/sub-category.model';
-import { FilterOption, IFilterOptions } from './filter.model';
+import { IFilterOptions } from './filter.model';
 
 @Component({
   selector: 'jhi-filter',
@@ -35,6 +35,14 @@ export class FilterComponent implements OnInit {
     this.filters.clear();
   }
 
+  subCategoryFilterChange(subCategory?: ISubCategory): void {
+    this.clearFilter('subCategoryId.in');
+
+    if (subCategory) {
+      this.addFilter('subCategoryId.in', [String(subCategory.id)]);
+    }
+  }
+
   brandFilterChange(brand: IBrandFilter): void {
     if (brand.selected) {
       this.addFilter('brandId.in', [String(brand.id)]);
@@ -44,23 +52,23 @@ export class FilterComponent implements OnInit {
   }
 
   private addFilter(filterName: string, values: string[]): void {
-    const filter = this.filters.getFilterByName(filterName);
+    const filter = this.filters.getFilterOptionByName(filterName);
 
-    if (filter !== undefined) {
+    if (filter !== null) {
       filter.addValue(...values);
     } else {
-      this.filters.addFilter('brandId.in', ...values);
+      this.filters.addFilter(filterName, ...values);
     }
   }
 
-  private clearFilter(filterName: string, value: string): void {
+  private clearFilter(filterName: string, value?: string): void {
     this.filters.removeFilter(filterName, value);
   }
 
   private loadFilters(): void {
-    const filter = this.filters.getFilterByName('brandId.in');
+    const filter = this.filters.getFilterOptionByName('brandId.in');
 
-    if (filter !== undefined) {
+    if (filter !== null) {
       const values = filter.values;
 
       this.brands?.forEach(brand => {

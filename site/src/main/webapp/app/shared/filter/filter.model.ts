@@ -11,6 +11,7 @@ export interface IFilterOptions {
   addFilter(name: string, ...values: string[]): boolean;
   removeFilter(name: string, value?: string): boolean;
   getFilterOptionByName(name: string): FilterOption | null;
+  changed(): void;
 }
 
 export interface IFilterOption {
@@ -150,7 +151,7 @@ export class FilterOptions implements IFilterOptions {
 
   addFilter(name: string, ...values: string[]): boolean {
     if (this.getFilterOptionByName(name, true).addValue(...values)) {
-      this.changed();
+      // this.changed();
       return true;
     }
     return false;
@@ -159,20 +160,20 @@ export class FilterOptions implements IFilterOptions {
   removeFilter(name: string, value?: string): boolean {
     if (value) {
       if (this.getFilterOptionByName(name)?.removeValue(value)) {
-        this.changed();
+        // this.changed();
         return true;
       }
     } else {
       const index = this._filterOptions.findIndex(filter => filter.name === name);
       this._filterOptions.splice(index, 1);
-      this.changed();
+      // this.changed();
       return true;
     }
 
     return false;
   }
 
-  protected changed(): void {
+  changed(): void {
     this.filterChanges.next(this.filterOptions.map(option => option.clone()));
   }
 

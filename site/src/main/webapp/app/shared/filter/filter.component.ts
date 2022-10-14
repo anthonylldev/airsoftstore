@@ -18,6 +18,7 @@ export class FilterComponent implements OnInit {
   @Input() filters!: IFilterOptions;
   categories?: ICategoryFilter[];
   brands?: IBrandFilter[];
+  rangeValues: number[] = [0, 1000];
 
   constructor(
     private categoryService: CategoryService,
@@ -33,6 +34,7 @@ export class FilterComponent implements OnInit {
 
   clearAllFilters(): void {
     this.filters.clear();
+    this.loadFilters();
   }
 
   subCategoryFilterChange(subCategory?: ISubCategory): void {
@@ -41,14 +43,29 @@ export class FilterComponent implements OnInit {
     if (subCategory) {
       this.addFilter('subCategoryId.in', [String(subCategory.id)]);
     }
+
+    this.filter();
   }
 
-  brandFilterChange(brand: IBrandFilter): void {
-    if (brand.selected) {
-      this.addFilter('brandId.in', [String(brand.id)]);
-    } else {
-      this.clearFilter('brandId.in', String(brand.id));
-    }
+  brandFilter(): void {
+    this.brands?.forEach(brand => {
+      if (brand.selected) {
+        this.addFilter('brandId.in', [String(brand.id)]);
+      } else {
+        this.clearFilter('brandId.in', String(brand.id));
+      }
+    });
+  }
+
+  priceFilter(): void {
+    const values = this.rangeValues.map(v => String(v));
+    this.addFilter('price.between', values);
+  }
+
+  filter(): void {
+    this.brandFilter();
+    // this.priceFilter();
+    this.filters.changed();
   }
 
   private addFilter(filterName: string, values: string[]): void {
@@ -77,6 +94,10 @@ export class FilterComponent implements OnInit {
         if (res !== undefined) {
           brand.selected = true;
         }
+      });
+    } else {
+      this.brands?.forEach(brand => {
+        brand.selected = false;
       });
     }
   }

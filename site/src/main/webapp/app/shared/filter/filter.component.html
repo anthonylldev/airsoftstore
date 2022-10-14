@@ -58,15 +58,36 @@
             type="checkbox"
             [(ngModel)]="brand.selected"
             [id]="brand.id"
-            (change)="brandFilterChange(brand)"
+            
           />
           <label class="form-check-label" for="flexCheckDefault">
             {{ brand.title }}
           </label>
         </div>
-        <br />
-        <div class="row">
-          <div class="col-12 d-flex justify-content-center">
+        <hr />
+        <div class="row price-range-filter">
+          <div class="col-md-12">
+            <div class="col-12">
+              <p-slider [(ngModel)]="rangeValues" [range]="true" [min]="0" [max]="1000"></p-slider>
+            </div>
+          </div>
+        </div>
+        <div class="row price-value d-flex justify-content-between">
+          <div class="col-5">
+            {{ rangeValues[0] | currency: 'EUR' }}
+          </div>
+          <div class="col-5">
+            {{ rangeValues[1] | currency: 'EUR' }}
+          </div>
+        </div>
+        <hr />
+        <div class="row filter-clean d-flex justify-content-around">
+          <div class="col-5 d-flex justify-content-center">
+            <button class="btn btn-primary btn-filter" (click)="filter()">
+              <span jhiTranslate="entity.filters.filter"></span>
+            </button>
+          </div>
+          <div class="col-5 d-flex justify-content-centerd-flex justify-content-center">
             <button class="btn btn-primary btn-clean-all" (click)="clearAllFilters()">
               <span jhiTranslate="entity.filters.clearAll"></span>
             </button>

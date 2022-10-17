@@ -1,3 +1,33 @@
-<div class="footer">
-  <p jhiTranslate="footer">Pie de página</p>
+<div class="footer container">
+  <div class="row">
+    <div class="col-md-4">
+      <h3 jhiTranslate="footer.contact">Contact</h3>
+      <ul>
+        <li>Avenida General Paramo 10</li>
+        <li>Totana, Murcia</li>
+        <li>628078776</li>
+      </ul>
+    </div>
+    <div class="col-md-4">
+      <h3 jhiTranslate="footer.most.popular">Most popular</h3>
+      <ul>
+        <li *ngFor="let subCategory of mostPopularSubCategories">
+          <a [routerLink]="['/item']" [queryParams]="{ 'filter[subCategoryId.in]': subCategory.id }"> {{ subCategory.title }}</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-4">
+      <h3 jhiTranslate="footer.newsletter">Newsletter</h3>
+      <div class="newsletter-container row">
+        <div class="col col-8">
+          <input type="email" [(ngModel)]="email"/>
+        </div>
+        <div class="col col-4">
+          <button type="submit" (click)="subscribe()">
+            <span jhiTranslate="footer.subscribe">Subscribe</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

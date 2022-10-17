@@ -35,6 +35,7 @@ export class FilterComponent implements OnInit {
   clearAllFilters(): void {
     this.filters.clear();
     this.loadFilters();
+    this.rangeValues = [0, 1000];
   }
 
   subCategoryFilterChange(subCategory?: ISubCategory): void {
@@ -58,13 +59,15 @@ export class FilterComponent implements OnInit {
   }
 
   priceFilter(): void {
-    const values = this.rangeValues.map(v => String(v));
-    this.addFilter('price.between', values);
+    if (this.rangeValues.length === 2) {
+      this.addFilter('price.greaterThanOrEqual', [String(this.rangeValues[0])]);
+      this.addFilter('price.lessThanOrEqual', [String(this.rangeValues[1])]);
+    }
   }
 
   filter(): void {
     this.brandFilter();
-    // this.priceFilter();
+    this.priceFilter();
     this.filters.changed();
   }
 

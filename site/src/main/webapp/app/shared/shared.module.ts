@@ -15,9 +15,10 @@ import { ItemCountComponent } from './pagination/item-count.component';
 import { FilterComponent } from './filter/filter.component';
 import { CardComponent } from './card-standard/standard-card.component';
 import { ItemCardComponent } from './card-item/item-card.component';
+import {SliderModule} from 'primeng/slider';
 
 @NgModule({
-  imports: [SharedLibsModule],
+  imports: [SharedLibsModule, SliderModule],
   declarations: [
     FindLanguageFromKeyPipe,
     TranslateDirective,

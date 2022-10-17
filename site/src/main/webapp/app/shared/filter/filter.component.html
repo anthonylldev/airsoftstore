@@ -1,12 +1,99 @@
-<div class="filter-display" *ngIf="filters.hasAnyFilterSet()">
-  <span jhiTranslate="entity.filters.set">Following filters are set</span>
-  <fa-icon icon="times" (click)="clearAllFilters()" title="{{ 'entity.filters.clearAll' | translate }}"></fa-icon>
-  <ul>
-    <ng-container *ngFor="let filterOption of filters.filterOptions">
-      <li *ngFor="let value of filterOption.values">
-        <span>{{ filterOption.name }}:</span> {{ value }}
-        <fa-icon icon="times" (click)="clearFilter(filterOption.name, value)" title="{{ 'entity.filters.clear' | translate }}"></fa-icon>
-      </li>
-    </ng-container>
-  </ul>
+<div class="accordion filter-display" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button
+        class="accordion-button"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapseOne"
+        aria-expanded="true"
+        aria-controls="collapseOne"
+      >
+        Filter
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <h2 class="accordion-header" id="flush-headingOne">
+          <button class="accordion-button collapsed all-btn" type="button" (click)="subCategoryFilterChange()">
+            <span>All</span>
+          </button>
+        </h2>
+        <div class="accordion accordion-flush" [id]="'#id' + category.id" *ngFor="let category of categories">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                [attr.data-bs-target]="'#id' + category.id"
+                aria-expanded="false"
+                aria-controls="flush-collapseOne"
+              >
+                {{ category.title }}
+              </button>
+            </h2>
+            <div
+              [id]="'id' + category.id"
+              class="accordion-collapse collapse"
+              aria-labelledby="flush-headingOne"
+              [attr.data-bs-parent]="'#id' + category.id"
+            >
+              <div class="accordion-body">
+                <button
+                  class="btn-subCategory"
+                  *ngFor="let subCategory of category.subCategories"
+                  (click)="subCategoryFilterChange(subCategory)"
+                >
+                  {{ subCategory.title }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="form-check" *ngFor="let brand of brands">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [(ngModel)]="brand.selected"
+            [id]="brand.id"
+            
+          />
+          <label class="form-check-label" for="flexCheckDefault">
+            {{ brand.title }}
+          </label>
+        </div>
+        <hr />
+        <div class="row price-range-filter">
+          <div class="col-md-12">
+            <div class="col-12">
+              <p-slider [(ngModel)]="rangeValues" [range]="true" [min]="0" [max]="1000"></p-slider>
+            </div>
+          </div>
+        </div>
+        <div class="row price-value d-flex justify-content-between">
+          <div class="col-5">
+            {{ rangeValues[0] | currency: 'EUR' }}
+          </div>
+          <div class="col-5">
+            {{ rangeValues[1] | currency: 'EUR' }}
+          </div>
+        </div>
+        <hr />
+        <div class="row filter-clean d-flex justify-content-around">
+          <div class="col-5 d-flex justify-content-center">
+            <button class="btn btn-primary btn-filter" (click)="filter()">
+              <span jhiTranslate="entity.filters.filter"></span>
+            </button>
+          </div>
+          <div class="col-5 d-flex justify-content-centerd-flex justify-content-center">
+            <button class="btn btn-primary btn-clean-all" (click)="clearAllFilters()">
+              <span jhiTranslate="entity.filters.clearAll"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

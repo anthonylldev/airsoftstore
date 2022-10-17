@@ -5,16 +5,20 @@ export interface IFilterOptions {
   readonly filterChanges: Subject<FilterOption[]>;
   get filterOptions(): IFilterOption[];
   hasAnyFilterSet(): boolean;
+  hasFilterByName(name: string): boolean;
   clear(): boolean;
   initializeFromParams(params: ParamMap): boolean;
   addFilter(name: string, ...values: string[]): boolean;
-  removeFilter(name: string, value: string): boolean;
+  removeFilter(name: string, value?: string): boolean;
+  getFilterOptionByName(name: string): FilterOption | null;
+  changed(): void;
 }
 
 export interface IFilterOption {
   name: string;
   values: string[];
   nameAsQueryParam(): string;
+  addValue(...values: string[]): boolean;
 }
 
 export class FilterOption implements IFilterOption {
@@ -75,6 +79,42 @@ export class FilterOptions implements IFilterOptions {
     return this._filterOptions.filter(option => option.isSet());
   }
 
+  getFilterOptionByName(name: string, add: true): FilterOption;
+  getFilterOptionByName(name: string, add: false): FilterOption | null;
+  getFilterOptionByName(name: string): FilterOption | null;
+  getFilterOptionByName(name: string, add = false): FilterOption | null {
+    const addOption = (option: FilterOption): FilterOption => {
+      this._filterOptions.push(option);
+      return option;
+    };
+
+    return this._filterOptions.find(thisOption => thisOption.name === name) ?? (add ? addOption(new FilterOption(name)) : null);
+  }
+
+  hasFilterByName(name: string): boolean {
+    let hasFilter = false;
+
+    this.filterOptions.forEach(filter => {
+      if (filter.name === name) {
+        hasFilter = true;
+      }
+    });
+
+    return hasFilter;
+  }
+
+  getFilterByName(name: string): IFilterOption | undefined {
+    let filterOption: IFilterOption | undefined;
+
+    this.filterOptions.forEach(filter => {
+      if (filter.name === name) {
+        filterOption = filter;
+      }
+    });
+
+    return filterOption;
+  }
+
   hasAnyFilterSet(): boolean {
     return this._filterOptions.some(e => e.isSet());
   }
@@ -111,21 +151,29 @@ export class FilterOptions implements IFilterOptions {
 
   addFilter(name: string, ...values: string[]): boolean {
     if (this.getFilterOptionByName(name, true).addValue(...values)) {
-      this.changed();
+      // this.changed();
       return true;
     }
     return false;
   }
 
-  removeFilter(name: string, value: string): boolean {
-    if (this.getFilterOptionByName(name)?.removeValue(value)) {
-      this.changed();
+  removeFilter(name: string, value?: string): boolean {
+    if (value) {
+      if (this.getFilterOptionByName(name)?.removeValue(value)) {
+        // this.changed();
+        return true;
+      }
+    } else {
+      const index = this._filterOptions.findIndex(filter => filter.name === name);
+      this._filterOptions.splice(index, 1);
+      // this.changed();
       return true;
     }
+
     return false;
   }
 
-  protected changed(): void {
+  changed(): void {
     this.filterChanges.next(this.filterOptions.map(option => option.clone()));
   }
 
@@ -140,17 +188,5 @@ export class FilterOptions implements IFilterOptions {
 
   protected clone(): FilterOptions {
     return new FilterOptions(this.filterOptions.map(option => new FilterOption(option.name, option.values.concat())));
-  }
-
-  protected getFilterOptionByName(name: string, add: true): FilterOption;
-  protected getFilterOptionByName(name: string, add: false): FilterOption | null;
-  protected getFilterOptionByName(name: string): FilterOption | null;
-  protected getFilterOptionByName(name: string, add = false): FilterOption | null {
-    const addOption = (option: FilterOption): FilterOption => {
-      this._filterOptions.push(option);
-      return option;
-    };
-
-    return this._filterOptions.find(thisOption => thisOption.name === name) ?? (add ? addOption(new FilterOption(name)) : null);
   }
 }

@@ -132,8 +132,9 @@
     },
     "filters": {
       "set": "Following filters are set",
-      "clear": "Clear filter",
-      "clearAll": "Clear all filters"
+      "clear": "Limpiar filtro",
+      "clearAll": "Limpiar",
+      "filter": "Filtrar"
     }
   },
   "error": {

@@ -1,0 +1,30 @@
+@import '../../../../content/scss/bootstrap-variables';
+
+.title-container {
+  margin: 20px 0;
+
+  h2 {
+    color: #e3dac9;
+    font-weight: 900;
+    font-size: 10em;
+    opacity: 0.5;
+
+    @media (max-width: $xxl) {
+      font-size: 11em;
+    }
+
+    @media (max-width: $xl) {
+      font-size: 10em;
+    }
+
+    @media (max-width: $lg) {
+      font-size: 8em;
+    }
+
+    @media (max-width: $md) {
+      font-size: 2em;
+      margin-top: 15px;
+      text-align: center;
+    }
+  }
+}

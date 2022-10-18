@@ -4,21 +4,28 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'jhi-card',
   templateUrl: './standard-card.component.html',
-  styleUrls: ['./standard-card.component.scss']
+  styleUrls: ['./standard-card.component.scss'],
 })
 export class CardComponent {
-  @Input() item?: any
+  @Input() item?: any;
+  @Input() url?: string;
+  @Input() queryObject?: any;
 
-  constructor(
-    private router: Router
-  ) {}
+  constructor(private router: Router) {}
 
   protected navToSubItems(): void {
-    const querySubItemObject: any = {
-      'filter[subCategoryId.in]': this.item.id
+    if (!this.url) {
+      const querySubItemObject: any = {
+        'filter[subCategoryId.in]': this.item.id,
+      };
+
+      this.router.navigate(['/item'], { queryParams: querySubItemObject });
+    } else {
+      if (!this.queryObject) {
+        this.router.navigate([this.url]);
+      } else {
+        this.router.navigate([this.url], { queryParams: this.queryObject });
+      }
     }
-    this.router.navigate(['/item'], {queryParams: querySubItemObject})
   }
-
 }
-

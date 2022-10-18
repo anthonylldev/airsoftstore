@@ -1,140 +1,47 @@
 <div>
-  <h2 id="page-heading" data-cy="SubCategoryHeading">
-    <span jhiTranslate="airsoftstoreApp.subCategory.home.title">Sub Categories</span>
-
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="airsoftstoreApp.subCategory.home.refreshListLabel">Refrescar lista</span>
-      </button>
-
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-sub-category"
-        [routerLink]="['/sub-category/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="airsoftstoreApp.subCategory.home.createLabel"> Crear nuevo Sub Category </span>
-      </button>
-    </div>
-  </h2>
-
   <jhi-alert-error></jhi-alert-error>
 
   <jhi-alert></jhi-alert>
-
-  <jhi-filter [filters]="filters"></jhi-filter>
 
   <div class="alert alert-warning" id="no-result" *ngIf="subCategories?.length === 0">
     <span jhiTranslate="airsoftstoreApp.subCategory.home.notFound">Ningún Sub Categories encontrado</span>
   </div>
 
-  <div class="table-responsive table-entities" id="entities" *ngIf="subCategories && subCategories.length > 0">
-    <table class="table table-striped" aria-describedby="page-heading">
-      <thead>
-        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span jhiTranslate="global.field.id">ID</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="title">
-            <div class="d-flex">
-              <span jhiTranslate="airsoftstoreApp.subCategory.title">Title</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="cover">
-            <div class="d-flex">
-              <span jhiTranslate="airsoftstoreApp.subCategory.cover">Cover</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="category.title">
-            <div class="d-flex">
-              <span jhiTranslate="airsoftstoreApp.subCategory.category">Category</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let subCategory of subCategories; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/sub-category', subCategory.id, 'view']">{{ subCategory.id }}</a>
-          </td>
-          <td>{{ subCategory.title }}</td>
-          <td>
-            <a *ngIf="subCategory.cover" (click)="openFile(subCategory.cover, subCategory.coverContentType)">
-              <img
-                [src]="'data:' + subCategory.coverContentType + ';base64,' + subCategory.cover"
-                style="max-height: 30px"
-                alt="subCategory image"
-              />
-            </a>
-            <span *ngIf="subCategory.cover">{{ subCategory.coverContentType }}, {{ byteSize(subCategory.cover) }}</span>
-          </td>
-          <td>
-            <div *ngIf="subCategory.category">
-              <a [routerLink]="['/category', subCategory.category.id, 'view']">{{ subCategory.category.title }}</a>
-            </div>
-          </td>
-          <td class="text-end">
-            <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/item']"
-                [queryParams]="{ 'filter[subCategoryId.in]': subCategory.id }"
-                class="btn btn-info btn-sm"
-                data-cy="filterOtherEntityButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span
-                  class="d-none d-md-inline"
-                  jhiTranslate="entity.action.show"
-                  [translateValues]="{ otherEntity: ('airsoftstoreApp.subCategory.item' | translate) }"
-                  >Show Item</span
-                >
-              </button>
-              <button
-                type="submit"
-                [routerLink]="['/sub-category', subCategory.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
-              </button>
+  <div class="row title-container">
+    <div class="col-12" *jhiHasAnyAuthority="'ROLE_ADMIN'">
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+          <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+          <span jhiTranslate="airsoftstoreApp.subCategory.home.refreshListLabel">Refrescar lista</span>
+        </button>
 
-              <button
-                type="submit"
-                [routerLink]="['/sub-category', subCategory.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
-              </button>
+        <button
+          id="jh-create-entity"
+          data-cy="entityCreateButton"
+          class="btn btn-primary jh-create-entity create-sub-category"
+          [routerLink]="['/sub-category/new']"
+        >
+          <fa-icon icon="plus"></fa-icon>
+          <span jhiTranslate="airsoftstoreApp.subCategory.home.createLabel"> Crear nuevo Sub Category </span>
+        </button>
+      </div>
+    </div>
+    <div class="col-12">
+      <h2 jhiTranslate="airsoftstoreApp.category.home.title">Category</h2>
+    </div>
+  </div>
 
-              <button type="submit" (click)="delete(subCategory)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <!-- <div class="col-12 col-lg-3 dilter-container">
+    <jhi-filter [filters]="filters"></jhi-filter>
+  </div> -->
+
+  <div class="row items-container" *ngIf="subCategories">
+    <div class="col-12 col-sm-6 col-md-3 col-lg-3" *ngFor="let subCategory of subCategories">
+      <jhi-card [item]="subCategory" [url]="'./sub-category/' + subCategory.id + '/edit'"></jhi-card>
+    </div>
   </div>
 
   <div *ngIf="subCategories && subCategories.length > 0">
-    <div class="d-flex justify-content-center">
-      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
-    </div>
-
     <div class="d-flex justify-content-center">
       <ngb-pagination
         [collectionSize]="totalItems"

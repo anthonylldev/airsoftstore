@@ -15,6 +15,7 @@ import { FilterOptions, IFilterOptions, IFilterOption } from 'app/shared/filter/
 @Component({
   selector: 'jhi-brand',
   templateUrl: './brand.component.html',
+  styleUrls: ["./brand.component.scss"]
 })
 export class BrandComponent implements OnInit {
   brands?: IBrand[];

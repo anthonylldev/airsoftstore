@@ -1,5 +1,5 @@
 <div class="card text-center" *ngIf="item" (click)="navToSubItems()">
-  <div class="card-img">
+  <div class="card-img" *ngIf="item.cover">
     <img [src]="'data:' + item.coverContentType + ';base64,' + item.cover" class="card-img-top" alt="item image" />
   </div>
   <div class="card-body">

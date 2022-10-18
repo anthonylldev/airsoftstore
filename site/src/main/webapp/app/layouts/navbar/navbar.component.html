@@ -27,6 +27,36 @@
             </span>
           </a>
         </li>
+
+        <li
+          ngbDropdown
+          class="nav-item dropdown pointer"
+          display="dynamic"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          *ngFor="let category of categories"
+        >
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
+            <span>
+              <fa-icon icon="th-list"></fa-icon>
+              <span>{{ category.title }}</span>
+            </span>
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
+            <li *ngFor="let subCategory of category.subCategories">
+              <a
+                class="dropdown-item"
+                [routerLink]="['item/']"
+                [queryParams]="{ 'filter[subCategoryId.in]': subCategory.id }"
+                routerLinkActive="active"
+                (click)="collapseNavbar()"
+              >
+                <span>{{ subCategory.title }}</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
         <li
           *jhiHasAnyAuthority="'ROLE_ADMIN'"
